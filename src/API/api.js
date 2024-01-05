@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 const axiosClient = axios.create({
     baseURL: "https://6435207983a30bc9ad5887af.mockapi.io/",
     headers: {

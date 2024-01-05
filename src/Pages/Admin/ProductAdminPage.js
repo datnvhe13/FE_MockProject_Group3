@@ -1,28 +1,35 @@
 import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actionFetchListCarsAPI_MDW } from "../../Redux/Reducer/CarSliceReducer";
+import { selectListCar } from "../../Redux/Selector/CarSelector";
 // import {
 //   actionDeleteCarAPI,
 //   actionGetListCarAPI,
 // } from "../Redux/Reducer/CarSliceReducer";
-// import { showCreateForm } from "../Redux/Reducer/CreateNewFormReducer";
+import { showCreateForm } from "../../Redux/Reducer/CreateNewFormReducer";
+import ModalCreateNewCar from "../../Components/Car/CreateCar/ModalCreateNewCar";
 // import { CreateNewFormReducer } from "./../Redux/Reducer/CreateNewFormReducer";
-// import {
-//   showCreateUpdateForm,
-//   showUpdateForm,
-// } from "../Redux/Reducer/CreateUpdateFormReducer";
+import {
+  // showCreateUpdateForm,
+  showUpdateForm,
+} from "../../Redux/Reducer/CreateUpdateFormReducer";
 // import { actionGetListCarCategoryAPI } from "../Redux/Reducer/CarCategorySliceReducer";
+import ModalUpdateCar from "./../../Components/Car/UpdateCar/ModalUpdateCar";
 
 function ProductAdminPage() {
   // dispath action
-  // let dispathRedux = useDispatch();
+  let dispathRedux = useDispatch();
 
   //
-  // useEffect(() => {
-  //   dispathRedux(actionGetListCarAPI());
-  //   dispathRedux(actionGetListCarCategoryAPI());
-  // }, []);
+  useEffect(() => {
+    // dispathRedux(actionGetListCarAPI());
+    // dispathRedux(actionGetListCarCategoryAPI());
+    dispathRedux(actionFetchListCarsAPI_MDW());
+  }, []);
   //
   // const listCar = useSelector((state) => state.carSlice.listCar);
+  let stateRedux = useSelector((state) => state);
+  let listCar = selectListCar(stateRedux);
 
   //
   // let onHandleDeleteCar = (id_Delete) => {
@@ -34,52 +41,52 @@ function ProductAdminPage() {
   // };
 
   //
-  // let onHandleUpdateButton = (car_Update) => {
-  //   dispathRedux(showUpdateForm(car_Update));
-  // };
-  //
-  let items = "";
-  // items = listCar.map((car, index) => {
-  // let imagePath = `Asset/${car.image}`;
+  let onHandleUpdateButton = (car_Update) => {
+    dispathRedux(showUpdateForm(car_Update));
+  };
 
-  //   return (
-  //     <tr>
-  //       <td>{index}</td>
-  //       <td>{car.name}</td>
-  //       <td>{car.price}</td>
-  //       {/* <td>{car.information}</td> */}
-  //       {/* <td>{car.detail}</td> */}
-  //       <td>
-  //         <img
-  //           src={imagePath}
-  //           style={{ width: "60px", height: "60px" }}
-  //           alt=""
-  //         />
-  //       </td>
-  //       <td>{car.year}</td>
-  //       <td>{car.category}</td>
-  //       <td>
-  //         <button
-  //           //
-  //           onClick={() => onHandleUpdateButton(car)}
-  //           type="button"
-  //           class="btn btn-primary"
-  //         >
-  //           Sửa
-  //         </button>
-  //       </td>
-  //       <td>
-  //         <button
-  //           onClick={() => onHandleDeleteCar(car.id)}
-  //           type="button"
-  //           class="btn btn-danger"
-  //         >
-  //           Xóa
-  //         </button>
-  //       </td>
-  //     </tr>
-  //   );
-  // });
+  let items = "";
+  items = listCar.map((car, index) => {
+    let imagePath = `../Asset/${car.image}`;
+
+    return (
+      <tr>
+        <td>{index}</td>
+        <td>{car.name}</td>
+        <td>{car.price}</td>
+        {/* <td>{car.information}</td> */}
+        {/* <td>{car.detail}</td> */}
+        <td>
+          <img
+            src={imagePath}
+            style={{ width: "60px", height: "60px" }}
+            alt=""
+          />
+        </td>
+        <td>{car.year}</td>
+        <td>{car.category}</td>
+        <td>
+          <button
+            //
+            onClick={() => onHandleUpdateButton(car)}
+            type="button"
+            class="btn btn-primary"
+          >
+            Sửa
+          </button>
+        </td>
+        <td>
+          <button
+            // onClick={() => onHandleDeleteCar(car.id)}
+            type="button"
+            class="btn btn-danger"
+          >
+            Xóa
+          </button>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <div className="container">
@@ -142,9 +149,9 @@ function ProductAdminPage() {
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#myModal"
-                // onClick={() => {
-                //   dispathRedux(showCreateForm());
-                // }}
+                onClick={() => {
+                  dispathRedux(showCreateForm());
+                }}
               >
                 Thêm mới
               </button>
@@ -164,14 +171,15 @@ function ProductAdminPage() {
                     <th>Xóa</th>
                   </tr>
                 </thead>
-                <tbody id="tbProductTable">
-                  {/* {items} */}
-                </tbody>
+                <tbody id="tbProductTable">{items}</tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+      <p>Paging</p>
+      <ModalCreateNewCar />
+      <ModalUpdateCar />
     </div>
   );
 }

@@ -1,19 +1,24 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectListCar } from "../Redux/Selector/CarSelector";
+import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
 function ListCar(props) {
-  let stateRedux = useSelector((state)=> state);
+  let stateRedux = useSelector((state) => state);
   let listCar = selectListCar(stateRedux);
+  const dispatch = useDispatch();
 
-  console.log(listCar);
+  useEffect(() => {
+    dispatch(actionFetchListCarsAPI_MDW());
+  }, []);
 
   //
   let items = "";
   items = listCar.map((car) => {
     let imagePath = `Asset/${car.image}`;
-    let carDetailPath = `/carDetail/${car.id}`;
+    let carDetailPath = `/homePage/carDetail/${car.id}`;
     return (
       <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 carItem hasHover">
         {/* <!-- image --> */}
@@ -55,11 +60,12 @@ function ListCar(props) {
   });
 
   return (
-    <div class="row listCars" id="listCarsHome">
-      {/* <!-- list product  --> */}
-      {items}
-      <h2>List Car</h2>
-    </div>
+    <>
+      <div class="row listCars" id="listCarsHome">
+        {/* <!-- list product  --> */}
+        {items}
+      </div>
+    </>
   );
 }
 

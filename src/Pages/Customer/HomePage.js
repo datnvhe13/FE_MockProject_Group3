@@ -1,5 +1,5 @@
 import Footer from "../../Components/Footer";
-import MainBody from "../../Components/MainBody";
+// import MainBody from "../../Components/MainBody";
 import Menu from "../../Components/Menu";
 import { Outlet } from "react-router-dom";
 
