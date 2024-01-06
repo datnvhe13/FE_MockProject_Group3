@@ -3,58 +3,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm } from "../Redux/Reducer/formSlice";
 import { selectListCar } from "../Redux/Selector/CarSelector";
+import { actionAddCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
 
 function TestDrivingRegister(props) {
-
   // declare State
   let [fullName, setFullName] = useState("");
   let [carType, setCarType] = useState("");
   let [date, setDate] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
-  // 
-  let [listCustomer, setListCustomer] = useState([]);
+  //
 
   // function reset test driving register modal
-  let resetModal = ()=>{
+  let resetModal = () => {
     setFullName("");
     setCarType("");
     setDate("");
     setPhoneNumber("");
-  }
-
+  };
 
   // function handleRegister
   let onHandleClick = () => {
-    console.log("fullName: ", fullName);
-    console.log("carName: ", carType);
-    console.log("date: ", date);
-    console.log("phone: ", phoneNumber);
-    // 
+    //
     let customer_New = {
-      fullName: fullName,
-      carType: carType,
-      date: date,
-      phoneNumber: phoneNumber
-    }
-    
-    listCustomer.push(customer_New);
-    setListCustomer(listCustomer);
-
-    localStorage.setItem("listCustomerRegisterTestDriving", JSON.stringify(listCustomer));
-
-     // alert success
-     alert("Đăng ký thành công !")
-     // close modal
-     dispatch(closeForm())
-     // reset textfield in modal
-     resetModal();
+      FullName: fullName,
+      CarType: carType,
+      Date: date,
+      PhoneNumber: phoneNumber,
+    };
+    dispatch(actionAddCustomerTestDrivingAPI(customer_New));
+    // alert success
+    alert("Đăng ký thành công !");
+    // close modal
+    dispatch(closeForm());
+    // reset textfield in modal
+    resetModal();
   };
 
   // load data from api and display on selector
-  let stateRedux = useSelector((state)=> state);
-  let listCar = selectListCar(stateRedux)
+  let stateRedux = useSelector((state) => state);
+  let listCar = selectListCar(stateRedux);
 
-  console.log('listCar register modal : ',listCar);
+  console.log("listCar register modal : ", listCar);
   let item = "";
   item = listCar.map((car) => {
     return <option value={car.name}>{car.name}</option>;
@@ -64,8 +53,8 @@ function TestDrivingRegister(props) {
   // let stateRedux = useSelector((state)=> state)
   // let showForm = stateRedux.formRedux.showForm
 
-  const showFormRTK = useSelector((state) => state.formReducer.value)
-  const dispatch = useDispatch()
+  const showFormRTK = useSelector((state) => state.formReducer.value);
+  const dispatch = useDispatch();
 
   return (
     <Modal isOpen={showFormRTK}>
@@ -157,10 +146,7 @@ function TestDrivingRegister(props) {
         </button>
       </ModalBody>
       <ModalFooter>
-        <Button
-          color="danger"
-          onClick={() => dispatch(closeForm())}
-        >
+        <Button color="danger" onClick={() => dispatch(closeForm())}>
           Đóng
         </Button>
       </ModalFooter>

@@ -1,55 +1,67 @@
-// import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import ModalCreateCustomerTestDriving from "./CustomerTestDriving/CreateCustomer/ModalCreateCustomerTestDriving";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { showCreateCustomerTestForm } from "../Redux/Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer";
 // import ModalUpdateCustomerTestDriving from "./CustomerTestDriving/UpdateCustomer/ModalUpdateCustomerTestDriving";
 // import { actionDeleteCustomerTestDrivingAPI, actionGetListCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
 // import { showUpdateCustomerTestDrivingForm } from "../Redux/Reducer/CustomerTestDriving/CreateUpdateCustomerFormReducer";
+import {
+  actionDeleteCustomerTestDrivingAPI,
+  actionGetListCustomerTestDrivingAPI,
+} from "./../../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
+import { showCreateCustomerTestForm } from "../../Redux/Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer";
+import ModalCreateCustomerTestDriving from "./../../Components/CustomerTestDriving/CreateCustomer/ModalCreateCustomerTestDriving";
+import ModalUpdateCustomerTestDriving from "./../../Components/CustomerTestDriving/UpdateCustomer/ModalUpdateCustomerTestDriving";
+import { showUpdateCustomerTestDrivingForm } from "../../Redux/Reducer/CustomerTestDriving/CreateUpdateCustomerFormReducer";
 
 function CustomerAdminPage() {
+  let dispatch = useDispatch();
 
-  // let dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actionGetListCustomerTestDrivingAPI());
+  }, []);
 
+  let onHandleDelete = (id_delete) => {
+    dispatch(actionDeleteCustomerTestDrivingAPI(id_delete));
+    alert("Delete successfully !");
+    dispatch(actionGetListCustomerTestDrivingAPI());
+  };
 
-  // useEffect(()=>{
-  //   dispatch(actionGetListCustomerTestDrivingAPI())
-  // }, [])
-
-
-  // let onHandleDelete = (id_delete)=> {
-  //   dispatch(actionDeleteCustomerTestDrivingAPI(id_delete))
-  //   alert("Delete successfully !")
-  //   dispatch(actionGetListCustomerTestDrivingAPI())
-  // }
-
-
-  // let listCustomer = useSelector((state)=> state.customerTestDriving.listCustomer)
-  // let items = "";
-  // items = listCustomer.map((customer, index) => {
-  //   return (
-  //     <tr>
-  //       <td>{index}</td>
-  //       <td>{customer.FullName}</td>
-  //       <td>{customer.CarType}</td>
-  //       <td>{customer.Date}</td>
-  //       <td>{customer.PhoneNumber}</td>
-  //       <td>
-  //         <button 
-  //         onClick={()=>dispatch(showUpdateCustomerTestDrivingForm(customer))}
-  //         type="button" class="btn btn-primary">
-  //           Sửa
-  //         </button>
-  //       </td>
-  //       <td>
-  //         <button
-  //          onClick={()=> onHandleDelete(customer.id)}
-  //         type="button" class="btn btn-danger">
-  //           Xóa
-  //         </button>
-  //       </td>
-  //     </tr>
-  //   );
-  // });
+  let listCustomer = useSelector(
+    (state) => state.customerTestDriving.listCustomer
+  );
+  let items = "";
+  items = listCustomer.map((customer, index) => {
+    return (
+      <tr>
+        <td>{index}</td>
+        <td>{customer.FullName}</td>
+        <td>{customer.CarType}</td>
+        <td>{customer.Date}</td>
+        <td>{customer.PhoneNumber}</td>
+        <td>
+          <button
+            onClick={() =>
+              dispatch(showUpdateCustomerTestDrivingForm(customer))
+            }
+            type="button"
+            class="btn btn-primary"
+          >
+            Sửa
+          </button>
+        </td>
+        <td>
+          <button
+            onClick={() => onHandleDelete(customer.id)}
+            type="button"
+            class="btn btn-danger"
+          >
+            Xóa
+          </button>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <>
@@ -115,7 +127,7 @@ function CustomerAdminPage() {
                   class="btn btn-primary"
                   data-toggle="modal"
                   data-target="#myModal"
-                  // onClick={()=>dispatch(showCreateCustomerTestForm())}
+                  onClick={() => dispatch(showCreateCustomerTestForm())}
                 >
                   Thêm mới
                 </button>
@@ -132,17 +144,51 @@ function CustomerAdminPage() {
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody id="tbProductTable">
-                    {/* {items} */}
-                    </tbody>
+                  <tbody id="tbProductTable">{items}</tbody>
                 </table>
+                {/* paging */}
+                <nav
+                  style={{ float: "right" }}
+                  aria-label="Page navigation example"
+                >
+                  <ul class="pagination">
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        1
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        2
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        3
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <ModalCreateCustomerTestDriving />
-      <ModalUpdateCustomerTestDriving/> */}
+
+      <ModalCreateCustomerTestDriving />
+      <ModalUpdateCustomerTestDriving />
     </>
   );
 }

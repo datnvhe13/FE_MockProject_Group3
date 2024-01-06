@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm2 } from "../Redux/Reducer/formSlice2";
-import { selectListCar } from './../Redux/Selector/CarSelector';
+import { selectListCar } from "./../Redux/Selector/CarSelector";
+import { actionAddCustomerAPI } from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
 
 function RegisterModal(props) {
- 
   // declare State
   let [fullName, setFullName] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
@@ -24,7 +24,7 @@ function RegisterModal(props) {
   let onHandleChange = (event) => {
     setPayments(event.target.value);
     // console.log(event.target.value);
-    console.log(payments);
+    //console.log(payments);
   };
 
   // function handle register
@@ -36,43 +36,39 @@ function RegisterModal(props) {
       paymentMethod = "Trả góp";
     }
     //  declare new customer
+    // let customer = {
+    //   fullName: fullName,
+    //   phoneNumber: phoneNumber,
+    //   carType: carType,
+    //   paymentMethod: paymentMethod,
+    // };
     let customer = {
-      fullName: fullName,
-      phoneNumber: phoneNumber,
-      carType: carType,
-      paymentMethod: paymentMethod,
+      FullName: fullName,
+      PhoneNumber: phoneNumber,
+      CarType: carType,
+      PaymentMethod: paymentMethod,
     };
-    // declare a list customer
 
-    listCustomer.push(customer);
-    //set State
-    setListCustomer(listCustomer);
-    // save to local storage
-    localStorage.setItem(
-      "listCustomerRegisterAlertPrice",
-      JSON.stringify(listCustomer)
-    );
-
+    dispatch(actionAddCustomerAPI(customer));
     // alert success
     alert("Đăng ký thành công !");
     // close modal
-    dispatch(closeForm2())
+    dispatch(closeForm2());
     // reset textfield in modal
     resetModal();
   };
 
-  let stateRedux = useSelector((state)=> state);
+  let stateRedux = useSelector((state) => state);
   let listCar = selectListCar(stateRedux);
 
-  console.log('listCar register modal : ',listCar);
+  //console.log("listCar register modal : ", listCar);
   let items = "";
   items = listCar.map((car) => {
     return <option value={car.name}>{car.name}</option>;
   });
 
-  const showFormRTK = useSelector((state) => state.formSlice2.value)
-  const dispatch = useDispatch()
-  
+  const showFormRTK = useSelector((state) => state.formSlice2.value);
+  const dispatch = useDispatch();
 
   return (
     <Modal isOpen={showFormRTK}>
@@ -189,10 +185,7 @@ function RegisterModal(props) {
         </button>
       </ModalBody>
       <ModalFooter>
-        <Button
-           onClick={() => dispatch(closeForm2())}
-          color="danger"
-        >
+        <Button onClick={() => dispatch(closeForm2())} color="danger">
           Đóng
         </Button>
       </ModalFooter>

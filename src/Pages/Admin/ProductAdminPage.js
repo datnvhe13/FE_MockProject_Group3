@@ -15,6 +15,7 @@ import {
 } from "../../Redux/Reducer/CreateUpdateFormReducer";
 // import { actionGetListCarCategoryAPI } from "../Redux/Reducer/CarCategorySliceReducer";
 import ModalUpdateCar from "./../../Components/Car/UpdateCar/ModalUpdateCar";
+import { actionDeleteCarAPI } from "./../../Redux/Reducer/CarSliceReducer";
 
 function ProductAdminPage() {
   // dispath action
@@ -32,13 +33,13 @@ function ProductAdminPage() {
   let listCar = selectListCar(stateRedux);
 
   //
-  // let onHandleDeleteCar = (id_Delete) => {
-  //   dispathRedux(actionDeleteCarAPI(id_Delete));
-  //   // alert
-  //   alert("Delete successfully !");
-  //   // dispathRedux(closeForm())
-  //   console.log("Id_Delete: ", id_Delete);
-  // };
+  let onHandleDeleteCar = (id_Delete) => {
+    dispathRedux(actionDeleteCarAPI(id_Delete));
+    // alert
+    alert("Delete successfully !");
+    // dispathRedux(closeForm())
+    console.log("Id_Delete: ", id_Delete);
+  };
 
   //
   let onHandleUpdateButton = (car_Update) => {
@@ -77,7 +78,7 @@ function ProductAdminPage() {
         </td>
         <td>
           <button
-            // onClick={() => onHandleDeleteCar(car.id)}
+            onClick={() => onHandleDeleteCar(car.id)}
             type="button"
             class="btn btn-danger"
           >
@@ -173,11 +174,46 @@ function ProductAdminPage() {
                 </thead>
                 <tbody id="tbProductTable">{items}</tbody>
               </table>
+
+              {/* paging */}
+              <nav
+                style={{ float: "right" }}
+                aria-label="Page navigation example"
+              >
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      1
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      2
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      3
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
       </div>
-      <p>Paging</p>
       <ModalCreateNewCar />
       <ModalUpdateCar />
     </div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { actionAddCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
+import { closeCreateForm } from "../../../Redux/Reducer/CreateNewFormReducer";
 // import { closeCreateForm } from "../../../Redux/Reducer/CreateNewFormReducer";
 // import { actionAddCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
 
@@ -46,10 +48,10 @@ function InputForm() {
       year: year,
       category: carType,
     };
-    // dispatch(actionAddCarAPI(car_new));
-    console.log("car_new : ", car_new);
+    dispatch(actionAddCarAPI(car_new));
+    // console.log("car_new : ", car_new);
     alert("Add successfully !");
-    // dispatch(closeCreateForm());
+    dispatch(closeCreateForm());
   };
 
   return (

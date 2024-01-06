@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 function Posts() {
   return (
@@ -45,17 +45,16 @@ function Posts() {
       {/* content */}
       <div
         class="row"
-        style={{ 
-          // border: "1px solid rgb(206, 201, 201)", 
-          padding: "12px 6px" }}
+        style={{
+          // border: "1px solid rgb(206, 201, 201)",
+          padding: "12px 6px",
+        }}
       >
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="panel panel-default">
             <div class="panel-body">
               <h3>
-                <b style={{ color: "green" }}>
-                  TIN TỨC
-                </b>
+                <b style={{ color: "green" }}>TIN TỨC</b>
               </h3>
               {/* <!-- button --> */}
               <button
@@ -131,15 +130,49 @@ function Posts() {
                       </button>
                     </td>
                   </tr>
-                
                 </tbody>
               </table>
+              {/* paging */}
+              <nav
+                style={{ float: "right" }}
+                aria-label="Page navigation example"
+              >
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      1
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      2
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      3
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Posts
+export default Posts;

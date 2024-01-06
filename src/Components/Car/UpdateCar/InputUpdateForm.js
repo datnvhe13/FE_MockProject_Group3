@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 // import { actionUpdateCarAPI } from '../../../Redux/Reducer/CarSliceReducer';
 import { closeUpdateForm } from "../../../Redux/Reducer/CreateUpdateFormReducer";
+import { actionUpdateCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
 
 function InputUpdateForm(props) {
   let { car_Update } = props;
@@ -46,11 +47,7 @@ function InputUpdateForm(props) {
       year: year,
       category: carType,
     };
-    console.log("car_Update : ", carUpdate);
-    // console.log('car_Update_ID : ', car_Update.id);
-    // dispatch(actionUpdateCarAPI(carUpdate))
-    // console.log("car_new : ", car_new);
-    // alert("Chỉnh sửa successfully !")
+    dispatch(actionUpdateCarAPI(carUpdate));
     dispatch(closeUpdateForm());
   };
 

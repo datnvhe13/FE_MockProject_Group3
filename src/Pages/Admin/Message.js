@@ -51,9 +51,7 @@ function Message() {
           <div class="panel panel-default">
             <div class="panel-body">
               <h3>
-                <b style={{ color: "green" }}>
-                  TIN NHẮN
-                </b>
+                <b style={{ color: "green" }}>TIN NHẮN</b>
               </h3>
               {/* <!-- button --> */}
               <button
@@ -82,7 +80,10 @@ function Message() {
                     <td>1</td>
                     <td>Hoàng Quốc Việt</td>
                     <td>18/02/2023</td>
-                    <td>Hi Admin, Admin cho mình hỏi là shop có chương trình mua trả góp không ạ !</td>
+                    <td>
+                      Hi Admin, Admin cho mình hỏi là shop có chương trình mua
+                      trả góp không ạ !
+                    </td>
                     <td>098525214656</td>
                     <td>
                       <button type="button" class="btn btn-primary">
@@ -99,7 +100,10 @@ function Message() {
                     <td>2</td>
                     <td>Lê Dũng</td>
                     <td>22/02/2023</td>
-                    <td>Hi Admin, chiếc Bmw X5 hôm trước mình hỏi Showrom đã nhập xe về chưa ạ ?</td>
+                    <td>
+                      Hi Admin, chiếc Bmw X5 hôm trước mình hỏi Showrom đã nhập
+                      xe về chưa ạ ?
+                    </td>
                     <td>098525214656</td>
                     <td>
                       <button type="button" class="btn btn-primary">
@@ -131,6 +135,41 @@ function Message() {
                   </tr>
                 </tbody>
               </table>
+              {/* paging */}
+              <nav
+                style={{ float: "right" }}
+                aria-label="Page navigation example"
+              >
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      1
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      2
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      3
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

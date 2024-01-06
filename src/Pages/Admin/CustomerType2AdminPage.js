@@ -1,60 +1,69 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { showCreateCustomerForm } from "../Redux/Reducer/CustomerReceiveAlertPrice/CreateNewCustomerFormReducer";
 // import ModalUpdateCustomer from "./CustomerReceiveAlertPrice/UpdateCustomer/ModalUpdateCustomer";
 // import ModalCreateNewCustomer from "./CustomerReceiveAlertPrice/CreateCustomer/ModalCreateNewCustomer";
-// import { showUpdateCustomerForm } from "../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
-// import { actionDeleteCustomerAPI, actionGetListCustomerAPI } from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
+//import { showUpdateCustomerForm } from "../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
+//import {
+import {
+  actionDeleteCustomerAPI,
+  actionGetListCustomerAPI,
+} from "./../../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
+import { showCreateCustomerForm } from "../../Redux/Reducer/CustomerReceiveAlertPrice/CreateNewCustomerFormReducer";
+import ModalCreateNewCustomer from "./../../Components/CustomerReceiveAlertPrice/CreateCustomer/ModalCreateNewCustomer";
+import ModalUpdateCustomer from "./../../Components/CustomerReceiveAlertPrice/UpdateCustomer/ModalUpdateCustomer";
+import { showUpdateCustomerForm } from "../../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
+//actionDeleteCustomerAPI,
+//actionGetListCustomerAPI,
+//} from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
 
 function CustomerType2AdminPage() {
   // let [listCustomer, setListCustomer] = useState([]);
 
-  // let dispatch = useDispatch();
+  let dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(actionGetListCustomerAPI())
-   
-  // }, []);
+  useEffect(() => {
+    dispatch(actionGetListCustomerAPI());
+  }, []);
 
+  let onHandleDelete = (index_delete) => {
+    dispatch(actionDeleteCustomerAPI(index_delete));
+    alert("Delete successfully !");
+  };
 
-  // let onHandleDelete = (index_delete) => {
-  
-  //   dispatch(actionDeleteCustomerAPI(index_delete))
-  //   alert("Delete successfully !");
-  // };
-
-
-  // let listCustomer = useSelector((state)=> state.customerReceiveAlertPrice.listCustomer);
-  // let items = "";
-  // items = listCustomer.map((customer, index) => {
-  //   return (
-  //     <tr>
-  //       <td>{index}</td>
-  //       <td>{customer.FullName}</td>
-  //       <td>{customer.PhoneNumber}</td>
-  //       <td>{customer.CarType}</td>
-  //       <td>{customer.PaymentMethod}</td>
-  //       <td>
-  //         <button
-  //           onClick={() => dispatch(showUpdateCustomerForm(customer))}
-  //           type="button"
-  //           class="btn btn-primary"
-  //         >
-  //           Sửa
-  //         </button>
-  //       </td>
-  //       <td>
-  //         <button
-  //           onClick={() => onHandleDelete(customer.id)}
-  //           type="button"
-  //           class="btn btn-danger"
-  //         >
-  //           Xóa
-  //         </button>
-  //       </td>
-  //     </tr>
-  //   );
-  // });
+  let listCustomer = useSelector(
+    (state) => state.customerReceiveAlertPrice.listCustomer
+  );
+  let items = "";
+  items = listCustomer.map((customer, index) => {
+    return (
+      <tr>
+        <td>{index}</td>
+        <td>{customer.FullName}</td>
+        <td>{customer.PhoneNumber}</td>
+        <td>{customer.CarType}</td>
+        <td>{customer.PaymentMethod}</td>
+        <td>
+          <button
+            onClick={() => dispatch(showUpdateCustomerForm(customer))}
+            type="button"
+            class="btn btn-primary"
+          >
+            Sửa
+          </button>
+        </td>
+        <td>
+          <button
+            onClick={() => onHandleDelete(customer.id)}
+            type="button"
+            class="btn btn-danger"
+          >
+            Xóa
+          </button>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <>
@@ -120,7 +129,7 @@ function CustomerType2AdminPage() {
                   class="btn btn-primary"
                   data-toggle="modal"
                   data-target="#myModal"
-                  // onClick={() => dispatch(showCreateCustomerForm())}
+                  onClick={() => dispatch(showCreateCustomerForm())}
                 >
                   Thêm mới
                 </button>
@@ -137,18 +146,51 @@ function CustomerType2AdminPage() {
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody id="tbProductTable">
-                    {/* {items} */}
-                    </tbody>
+                  <tbody id="tbProductTable">{items}</tbody>
                 </table>
+                {/* paging */}
+                <nav
+                  style={{ float: "right" }}
+                  aria-label="Page navigation example"
+                >
+                  <ul class="pagination">
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        1
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        2
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        3
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* <ModalCreateNewCustomer />
-      <ModalUpdateCustomer /> */}
+      <ModalCreateNewCustomer />
+      <ModalUpdateCustomer />
     </>
   );
 }
