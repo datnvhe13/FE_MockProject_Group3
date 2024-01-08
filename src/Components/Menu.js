@@ -4,6 +4,8 @@ import TestDrivingRegister from "./TestDrivingRegister";
 import { useDispatch } from "react-redux";
 import { showForm } from "../Redux/Reducer/formSlice";
 import { showForm2 } from "../Redux/Reducer/formSlice2";
+import LoginForm from "./LoginModal/LoginForm";
+import { showLoginForm } from "../Redux/Reducer/loginModalSlice";
 
 function Menu(props) {
   const dispatch = useDispatch();
@@ -66,7 +68,7 @@ function Menu(props) {
             </ul>
             <form class="d-flex">
               <button
-                // onClick={() => dispatch(showForm())}
+                onClick={() => dispatch(showLoginForm())}
                 type="button"
                 class="btn btn-danger twoButton"
               >
@@ -100,6 +102,7 @@ function Menu(props) {
       <TestDrivingRegister
       // onHandleCloseForm={onHandleCloseForm}
       />
+      <LoginForm />
     </>
   );
 }

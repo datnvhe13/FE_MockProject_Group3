@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm2 } from "../Redux/Reducer/formSlice2";
-import { selectListCar } from "./../Redux/Selector/CarSelector";
 import { actionAddCustomerAPI } from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
 
 function RegisterModal(props) {
@@ -12,7 +11,7 @@ function RegisterModal(props) {
   let [carType, setCarType] = useState("BMW X3");
   let [payments, setPayments] = useState("1");
 
-  let [listCustomer, setListCustomer] = useState([]);
+  //let [listCustomer, setListCustomer] = useState([]);
 
   // function reset test driving register modal
   let resetModal = () => {
@@ -58,8 +57,8 @@ function RegisterModal(props) {
     resetModal();
   };
 
-  let stateRedux = useSelector((state) => state);
-  let listCar = selectListCar(stateRedux);
+  let listCar = useSelector((state) => state.carReducer.listCar);
+  //let listCar = selectListCar(stateRedux);
 
   //console.log("listCar register modal : ", listCar);
   let items = "";

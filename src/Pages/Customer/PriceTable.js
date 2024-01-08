@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { getListCarAPI } from "../../API/CarAPI";
 import { useSelector, useDispatch } from "react-redux";
-import { selectListCar } from "../../Redux/Selector/CarSelector";
 import { actionFetchListCarsAPI_MDW } from "../../Redux/Reducer/CarSliceReducer";
 
 function PriceTable() {
   //
-  let stateRedux = useSelector((state) => state);
-  let listCar = selectListCar(stateRedux);
+  // let stateRedux = useSelector((state) => state);
+  // let listCar = selectListCar(stateRedux);
+
+  let listCar = useSelector((state) => state.carReducer.listCar);
 
   const dispatch = useDispatch();
 

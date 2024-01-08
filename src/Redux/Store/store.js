@@ -10,11 +10,15 @@ import CreateUpdateCustomerFormReducer from "../Reducer/CustomerReceiveAlertPric
 import customerTestDrivingSlice from "../Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
 import CreateNewCustomerTestFormReducer from "../Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer";
 import CreateUpdateCustomerTestDrivingFormReducer from "../Reducer/CustomerTestDriving/CreateUpdateCustomerFormReducer";
+import loginModalSlice from "../Reducer/loginModalSlice";
+import CreateNewNewsFormReducer from "../Reducer/News/CreateNewNewsFormReducer";
+import CreateUpdateNewsFormReducer from "../Reducer/News/CreateUpdateNewsFormReducer";
 
 export const store = configureStore({
   reducer: {
     carReducer: carSliceReducer,
     formSlice: CreateNewFormReducer,
+    loginModalSlice: loginModalSlice,
     formUpdateSlice: CreateUpdateFormReducer,
     formReducer: formSlice,
     formSlice2: formSlice2,
@@ -25,5 +29,7 @@ export const store = configureStore({
     CreateNewCustomerTestFormReducer: CreateNewCustomerTestFormReducer,
     CreateUpdateCustomerTestDrivingFormReducer:
       CreateUpdateCustomerTestDrivingFormReducer,
+    CreateNewNewsFormReducer: CreateNewNewsFormReducer,
+    CreateUpdateNewsFormReducer: CreateUpdateNewsFormReducer,
   },
 });

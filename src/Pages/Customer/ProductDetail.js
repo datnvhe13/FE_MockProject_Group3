@@ -3,6 +3,8 @@ import "../../carDetail.css";
 import { useParams } from "react-router-dom";
 // import { getListCarAPI } from "../API/CarAPI";
 import { getListCarAPI } from "../../API/CarAPI";
+import { FormGroup } from "reactstrap";
+import { Input } from "reactstrap";
 
 function ProductDetail() {
   // Get the userId param from the URL.
@@ -249,66 +251,24 @@ function ProductDetail() {
           // style="font-weight: bold;"
           style={{ fontWeight: "bold" }}
         >
-          <h1>Liên hệ</h1>
+          <h1>
+            <b>Bình luận</b>
+          </h1>
           <br />
-          <p>
-            Liên hệ ngay Hotline: 092.246.7899 để đặt hàng và trở thành một
-            trong những người đầu tiên sở hữu BMW THE X7 LCI 2023 tại Việt Nam.
-          </p>
-          <p class="w3-text-blue-grey w3-large">
-            <b>
-              BMW Thạch Thất - Đ/c : Thái Bình, Bình Yên, Thạch Thất, Hà Nội
-            </b>
-          </p>
-          <p>
-            Bạn cũng có thể liên hệ với chúng tôi qua số điện thoại 097936524
-            hoặc email thachthatshowrom@bmw.com hoặc bạn có thể gửi tin nhắn cho
-            chúng tôi tại đây:
-          </p>
+
           <form action="/action_page.php" target="_blank">
-            <p>
-              <input
-                class="w3-input w3-padding-16"
-                type="text"
-                placeholder="Nhập tên của bạn"
-                required
-                name="Name"
+            <FormGroup>
+              <Input
+                style={{ height: "200px" }}
+                type="textarea"
+                name="text"
+                id="exampleText"
               />
-            </p>
-            <p>
-              <input
-                class="w3-input w3-padding-16"
-                type="number"
-                placeholder="Nhập số điện thoại của bạn"
-                required
-                name="People"
-              />
-            </p>
+            </FormGroup>
 
-            <p>
-              <label for="">Ngày hẹn :</label>
-              <input
-                class="w3-input w3-padding-16"
-                type="datetime-local"
-                placeholder="Date and time"
-                required
-                name="date"
-                value="2020-11-16T20:00"
-              />
-            </p>
-
-            <p>
-              <input
-                class="w3-input w3-padding-16"
-                type="text"
-                placeholder="Nội dung"
-                required
-                name="Message"
-              />
-            </p>
             <p>
               <button class="w3-button w3-light-grey w3-section" type="submit">
-                SEND MESSAGE
+                Gửi
               </button>
             </p>
           </form>

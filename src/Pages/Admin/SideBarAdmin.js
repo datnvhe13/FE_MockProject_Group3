@@ -1,13 +1,12 @@
-
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 // import ModalCreateNewCar from './Car/CreateCar/ModalCreateNewCar'
 // import ModalUpdateCar from './Car/UpdateCar/ModalUpdateCar'
 
 function SideBarAdmin() {
   return (
-   <>
-     <nav>
+    <>
+      <nav>
         {/* logo */}
         {/* <div className="logo">
           <i class="bx bx-menu menu-icon"></i>
@@ -35,8 +34,8 @@ function SideBarAdmin() {
                 </Link>
               </li>
               {/* end li */}
-               {/* li */}
-               <li className="list">
+              {/* li */}
+              <li className="list">
                 <Link to="#" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-male-female icon"></i>
@@ -65,8 +64,8 @@ function SideBarAdmin() {
                 </Link>
               </li>
               {/* end li */}
-               {/* li */}
-               <li className="list">
+              {/* li */}
+              <li className="list">
                 <Link to="customerType2" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-male-female icon"></i>
@@ -96,14 +95,14 @@ function SideBarAdmin() {
                 </Link>
               </li>
               {/* end li */}
-             
+
               {/* li */}
               <li className="list">
                 <Link to="message" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-chat icon"></i>
                   {/*  */}
-                  <span class="link">Tin nhắn</span>
+                  <span class="link">Phản hồi</span>
                 </Link>
               </li>
               {/* end li */}
@@ -118,7 +117,6 @@ function SideBarAdmin() {
               </li>
               {/* end li */}
 
-             
               {/* li */}
               <li className="list">
                 <Link to="#" className="nav-link">
@@ -126,9 +124,8 @@ function SideBarAdmin() {
                   <i class="bx bx-log-out icon"></i>
                   {/*  */}
                   <a href="#">
-                  <span class="link">Đăng xuất</span>
+                    <span class="link">Đăng xuất</span>
                   </a>
-                 
                 </Link>
               </li>
               {/* end li */}
@@ -140,8 +137,8 @@ function SideBarAdmin() {
 
       {/* <ModalCreateNewCar/>
       <ModalUpdateCar/> */}
-   </>
-  )
+    </>
+  );
 }
 
-export default SideBarAdmin
+export default SideBarAdmin;

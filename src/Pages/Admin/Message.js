@@ -51,27 +51,27 @@ function Message() {
           <div class="panel panel-default">
             <div class="panel-body">
               <h3>
-                <b style={{ color: "green" }}>TIN NHẮN</b>
+                <b style={{ color: "green" }}>PHẢN HỒI</b>
               </h3>
               {/* <!-- button --> */}
-              <button
+              {/* <button
                 type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#myModal"
               >
                 Thêm mới
-              </button>
+              </button> */}
               {/* <!-- table display list product --> */}
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Tên khách hàng</th>
+                    <th>Tên</th>
                     <th>Ngày gửi</th>
                     <th>Nội dung</th>
                     <th>Số điện thoại</th>
-                    <th> sửa</th>
+                    {/* <th> sửa</th> */}
                     <th>Xóa</th>
                   </tr>
                 </thead>
@@ -85,11 +85,11 @@ function Message() {
                       trả góp không ạ !
                     </td>
                     <td>098525214656</td>
-                    <td>
+                    {/* <td>
                       <button type="button" class="btn btn-primary">
                         Sửa
                       </button>
-                    </td>
+                    </td> */}
                     <td>
                       <button type="button" class="btn btn-danger">
                         Xóa
@@ -105,11 +105,11 @@ function Message() {
                       xe về chưa ạ ?
                     </td>
                     <td>098525214656</td>
-                    <td>
+                    {/* <td>
                       <button type="button" class="btn btn-primary">
                         Sửa
                       </button>
-                    </td>
+                    </td> */}
                     <td>
                       <button type="button" class="btn btn-danger">
                         Xóa
@@ -122,11 +122,11 @@ function Message() {
                     <td>28/03/2023</td>
                     <td>Showroom có làm việc vào thứ 7 không ạ !</td>
                     <td>098525214656</td>
-                    <td>
+                    {/* <td>
                       <button type="button" class="btn btn-primary">
                         Sửa
                       </button>
-                    </td>
+                    </td> */}
                     <td>
                       <button type="button" class="btn btn-danger">
                         Xóa

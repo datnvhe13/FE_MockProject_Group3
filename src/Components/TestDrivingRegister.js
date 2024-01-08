@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm } from "../Redux/Reducer/formSlice";
-import { selectListCar } from "../Redux/Selector/CarSelector";
 import { actionAddCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
 
 function TestDrivingRegister(props) {
@@ -40,8 +39,8 @@ function TestDrivingRegister(props) {
   };
 
   // load data from api and display on selector
-  let stateRedux = useSelector((state) => state);
-  let listCar = selectListCar(stateRedux);
+  let listCar = useSelector((state) => state.carReducer.listCar);
+  //let listCar = selectListCar(stateRedux);
 
   console.log("listCar register modal : ", listCar);
   let item = "";

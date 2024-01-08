@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionFetchListCarsAPI_MDW } from "../../Redux/Reducer/CarSliceReducer";
-import { selectListCar } from "../../Redux/Selector/CarSelector";
+//import { selectListCar } from "../../Redux/Selector/CarSelector";
 // import {
 //   actionDeleteCarAPI,
 //   actionGetListCarAPI,
@@ -29,8 +29,8 @@ function ProductAdminPage() {
   }, []);
   //
   // const listCar = useSelector((state) => state.carSlice.listCar);
-  let stateRedux = useSelector((state) => state);
-  let listCar = selectListCar(stateRedux);
+  let listCar = useSelector((state) => state.carReducer.listCar);
+  //let listCar = selectListCar(stateRedux);
 
   //
   let onHandleDeleteCar = (id_Delete) => {

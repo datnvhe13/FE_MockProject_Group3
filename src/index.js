@@ -28,10 +28,10 @@ import { store } from "./Redux/Store/store";
 import ProductDetail from "./Pages/Customer/ProductDetail";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-  },
+  // {
+  //   path: "/",
+  //   element: <Login />,
+  // },
   {
     path: "register",
     element: <Register />,
@@ -39,6 +39,40 @@ const router = createBrowserRouter([
   {
     path: "forget",
     element: <ForgetPassword />,
+  },
+  {
+    path: "/",
+    element: <HomePage />,
+    children: [
+      {
+        index: true,
+        element: <MainBody />,
+      },
+      {
+        path: "introduce",
+        element: <Introduce />,
+      },
+      {
+        path: "priceTable",
+        element: <PriceTable />,
+      },
+      {
+        path: "buyCar",
+        element: <BuyingOnInstallment />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "new",
+        element: <News />,
+      },
+      {
+        path: "carDetail/:ID",
+        element: <ProductDetail />,
+      },
+    ],
   },
   {
     path: "homePage",

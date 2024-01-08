@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectListCar } from "../Redux/Selector/CarSelector";
 import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
 function ListCar(props) {
-  let stateRedux = useSelector((state) => state);
-  let listCar = selectListCar(stateRedux);
+  let listCar = useSelector((state) => state.carReducer.listCar);
+  //let listCar = selectListCar(stateRedux);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
