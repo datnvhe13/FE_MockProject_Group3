@@ -82,23 +82,6 @@ function InputUpdateForm(props) {
           />
         </FormGroup> */}
 
-        {/* Email address */}
-        <FormGroup>
-          <Label for="exampleName">
-            <b>Địa chỉ email</b>
-          </Label>
-          <Input
-            id="emailAddress"
-            name="emailAddress"
-            placeholder="Nhập địa chỉ email"
-            type="email"
-            // value={email}
-            // onChange={(event) => {
-            //   setEmail(event.target.value);
-            // }}
-          />
-        </FormGroup>
-
         {/*First name */}
         <FormGroup>
           <Label for="exampleName">

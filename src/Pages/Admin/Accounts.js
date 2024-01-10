@@ -82,7 +82,7 @@ function Accounts() {
                   <thead>
                     <tr>
                       <th>Id</th>
-                      <th>Email</th>
+                      <th>Tên đăng nhập</th>
                       <th>Tên</th>
                       <th>Quyền</th>
                       <th>Ngày tạo</th>
