@@ -26,6 +26,7 @@ import Statics from "./Pages/Admin/Statics";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store/store";
 import ProductDetail from "./Pages/Customer/ProductDetail";
+import Accounts from "./Pages/Admin/Accounts";
 
 const router = createBrowserRouter([
   // {
@@ -119,6 +120,11 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
+        Accounts,
+      },
+      {
+        path: "accounts",
+        element: <Accounts />,
       },
       {
         path: "listProduct",

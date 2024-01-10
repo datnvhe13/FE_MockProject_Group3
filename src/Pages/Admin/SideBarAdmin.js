@@ -36,7 +36,7 @@ function SideBarAdmin() {
               {/* end li */}
               {/* li */}
               <li className="list">
-                <Link to="#" className="nav-link">
+                <Link to="accounts" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-male-female icon"></i>
                   {/*  */}

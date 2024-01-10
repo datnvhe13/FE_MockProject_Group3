@@ -1,36 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionFetchListCarsAPI_MDW } from "../../Redux/Reducer/CarSliceReducer";
-//import { selectListCar } from "../../Redux/Selector/CarSelector";
-// import {
-//   actionDeleteCarAPI,
-//   actionGetListCarAPI,
-// } from "../Redux/Reducer/CarSliceReducer";
 import { showCreateForm } from "../../Redux/Reducer/CreateNewFormReducer";
 import ModalCreateNewCar from "../../Components/Car/CreateCar/ModalCreateNewCar";
-// import { CreateNewFormReducer } from "./../Redux/Reducer/CreateNewFormReducer";
-import {
-  // showCreateUpdateForm,
-  showUpdateForm,
-} from "../../Redux/Reducer/CreateUpdateFormReducer";
-// import { actionGetListCarCategoryAPI } from "../Redux/Reducer/CarCategorySliceReducer";
+import { showUpdateForm } from "../../Redux/Reducer/CreateUpdateFormReducer";
 import ModalUpdateCar from "./../../Components/Car/UpdateCar/ModalUpdateCar";
 import { actionDeleteCarAPI } from "./../../Redux/Reducer/CarSliceReducer";
+import ReactPaginate from "react-paginate";
 
 function ProductAdminPage() {
   // dispath action
   let dispathRedux = useDispatch();
 
-  //
+  let { listCar, totalPages } = useSelector((state) => state.carReducer);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(9);
+
   useEffect(() => {
-    // dispathRedux(actionGetListCarAPI());
-    // dispathRedux(actionGetListCarCategoryAPI());
-    dispathRedux(actionFetchListCarsAPI_MDW());
-  }, []);
-  //
-  // const listCar = useSelector((state) => state.carSlice.listCar);
-  let listCar = useSelector((state) => state.carReducer.listCar);
-  //let listCar = selectListCar(stateRedux);
+    dispathRedux(actionFetchListCarsAPI_MDW({ page, size }));
+  }, [page, size]);
 
   //
   let onHandleDeleteCar = (id_Delete) => {
@@ -64,8 +52,8 @@ function ProductAdminPage() {
             alt=""
           />
         </td>
-        <td>{car.year}</td>
-        <td>{car.category}</td>
+        <td>{car.yearOfManufacturer}</td>
+        <td>{car.carCategoryName}</td>
         <td>
           <button
             //
@@ -176,40 +164,31 @@ function ProductAdminPage() {
               </table>
 
               {/* paging */}
-              <nav
-                style={{ float: "right" }}
-                aria-label="Page navigation example"
-              >
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div style={{ marginLeft: "520px", width: "900px" }}>
+                <ReactPaginate
+                  nextLabel="next >"
+                  onPageChange={(selectedItem) => {
+                    setPage(selectedItem.selected);
+                  }}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={2}
+                  pageCount={totalPages} // totalPages
+                  forcePage={page}
+                  previousLabel="< previous"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  renderOnZeroPageCount={null}
+                />
+              </div>
             </div>
           </div>
         </div>

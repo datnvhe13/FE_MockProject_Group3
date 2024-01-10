@@ -10,13 +10,14 @@ import { deleteCarAPI, updateCarAPI } from "./../../API/CarAPI";
 
 const initialState = {
   listCar: [],
+  totalPages: 0,
 };
 
 // action
 export let actionFetchListCarsAPI_MDW = createAsyncThunk(
   FETCH_CARS_LIST,
-  async () => {
-    let listCarAPI = await getListCarAPI();
+  async (params) => {
+    let listCarAPI = await getListCarAPI(params);
     return listCarAPI;
   }
 );
@@ -40,14 +41,14 @@ export let actionUpdateCarAPI = createAsyncThunk(
   async (carUpdate, { getState }) => {
     // get state
     const state = getState();
-    console.log("listCart222 : ", state);
-    const listCart = state.carReducer.listCar;
+    const listCar = state.carReducer.listCar;
+    console.log("listCar : ", listCar);
+    console.log("carUpdate : ", carUpdate);
     // update car API
     let carUpdate_API = await updateCarAPI(carUpdate); //action api
-    console.log("carUpdate_API : ", carUpdate_API);
 
-    const _lst = listCart.map((car) => {
-      if (car.id === carUpdate_API.id) {
+    const _lst = listCar.map((car) => {
+      if (car.id == carUpdate_API.id) {
         return carUpdate_API;
       }
       return car;
@@ -68,10 +69,12 @@ export const carSliceReducer = createSlice({
   //,
   extraReducers: (builder) => {
     builder.addCase(actionFetchListCarsAPI_MDW.fulfilled, (state, action) => {
-      state.listCar = action.payload;
+      state.listCar = action.payload.content;
+      state.totalPages = action.payload.totalPages;
     });
     builder.addCase(actionUpdateCarAPI.fulfilled, (state, action) => {
       state.listCar = action.payload;
+      console.log("action.payload update :", action.payload);
     });
     builder.addCase(actionAddCarAPI.fulfilled, (state, action) => {
       state.listCar.push(action.payload);

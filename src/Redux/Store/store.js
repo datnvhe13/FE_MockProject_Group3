@@ -13,6 +13,8 @@ import CreateUpdateCustomerTestDrivingFormReducer from "../Reducer/CustomerTestD
 import loginModalSlice from "../Reducer/loginModalSlice";
 import CreateNewNewsFormReducer from "../Reducer/News/CreateNewNewsFormReducer";
 import CreateUpdateNewsFormReducer from "../Reducer/News/CreateUpdateNewsFormReducer";
+import CreateNewAccountFormReducer from "../Reducer/Account/CreateNewAccountFormReducer";
+import CreateUpdateAccountFormReducer from "../Reducer/Account/CreateUpdateAccountFormReducer";
 
 export const store = configureStore({
   reducer: {
@@ -31,5 +33,7 @@ export const store = configureStore({
       CreateUpdateCustomerTestDrivingFormReducer,
     CreateNewNewsFormReducer: CreateNewNewsFormReducer,
     CreateUpdateNewsFormReducer: CreateUpdateNewsFormReducer,
+    CreateNewAccountFormReducer: CreateNewAccountFormReducer,
+    CreateUpdateAccountFormReducer: CreateUpdateAccountFormReducer,
   },
 });

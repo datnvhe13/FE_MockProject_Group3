@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
+import ReactPaginate from "react-paginate";
 
 function ListCar(props) {
-  let listCar = useSelector((state) => state.carReducer.listCar);
-  //let listCar = selectListCar(stateRedux);
-
   const dispatch = useDispatch();
+  let { listCar, totalPages } = useSelector((state) => state.carReducer);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(9);
 
   useEffect(() => {
-    dispatch(actionFetchListCarsAPI_MDW());
-  }, []);
+    dispatch(actionFetchListCarsAPI_MDW({ page, size }));
+  }, [page, size]);
 
-  //
   let items = "";
   items = listCar.map((car) => {
     let imagePath = `Asset/${car.image}`;
@@ -64,40 +64,31 @@ function ListCar(props) {
         {/* <!-- list product  --> */}
         {items}
         {/* paging */}
-        <nav
-          style={{ marginLeft: "860px" }}
-          aria-label="Page navigation example"
-        >
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                1
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                2
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                3
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div style={{ marginLeft: "880px" }}>
+          <ReactPaginate
+            nextLabel="next >"
+            onPageChange={(selectedItem) => {
+              setPage(selectedItem.selected);
+            }}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={totalPages} // totalPages
+            forcePage={page}
+            previousLabel="< previous"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+            renderOnZeroPageCount={null}
+          />
+        </div>
       </div>
     </>
   );

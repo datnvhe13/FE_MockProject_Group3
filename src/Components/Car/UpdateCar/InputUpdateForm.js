@@ -8,22 +8,25 @@ import { actionUpdateCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
 function InputUpdateForm(props) {
   let { car_Update } = props;
   console.log("car_Update props : ", car_Update);
-  // const listCarCategory = useSelector((state)=> state.carCategorySlice.listCarCategory);
-
-  let items = "";
-  // items = listCarCategory.map((carCategory, index)=> {
-  //   return (
-  //     <option value={carCategory.name}>{carCategory.name}</option>
-  //   );
-  // });
 
   let [fullName, setFullName] = useState(car_Update.name);
   let [price, setPrice] = useState(car_Update.price);
   let [description, setDescription] = useState(car_Update.information);
-  let [descripDetail, setDescripDetail] = useState(car_Update.detail);
+  let [descripDetail, setDescripDetail] = useState(
+    car_Update.detailInformation
+  );
   let [imagePath, setImagePath] = useState("");
-  let [year, setYear] = useState(car_Update.year);
-  let [carType, setCarType] = useState(car_Update.category);
+  let [year, setYear] = useState(car_Update.yearOfManufacturer);
+
+  let [seatingCapacity, setSeatingCapacity] = useState(
+    car_Update.seatingCapacity
+  );
+  let [carFuel, setCarFuel] = useState(car_Update.carFuel);
+  let [country, setCountry] = useState(car_Update.placeOfManufacture);
+  let [transmission, setTransmission] = useState(car_Update.transmission);
+  let [status, setStatus] = useState(car_Update.status);
+
+  let [carType, setCarType] = useState(car_Update.carCategoryName);
 
   // function to get image link
   function getImageName(imageLink) {
@@ -34,18 +37,33 @@ function InputUpdateForm(props) {
     return imageName;
   }
 
+  const date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let _year = date.getFullYear();
+
+  // This arrangement can be altered based on how we want the date's format to appear.
+  let currentDate = `${day}-${month}-${_year}`;
+
   let dispatch = useDispatch();
 
   let handleUpdateButton = () => {
     let carUpdate = {
       id: car_Update.id,
       name: fullName,
+      image: getImageName(imagePath),
       price: price,
       information: description,
-      detail: descripDetail,
-      image: getImageName(imagePath),
-      year: year,
-      category: carType,
+      detailInformation: descripDetail,
+      yearOfManufacturer: year,
+      seatingCapacity: seatingCapacity,
+      carFuel: carFuel,
+      placeOfManufacture: country,
+      transmission: transmission,
+      status: status,
+      createAt: currentDate,
+      carCategoryName: carType,
     };
     dispatch(actionUpdateCarAPI(carUpdate));
     dispatch(closeUpdateForm());
@@ -154,6 +172,112 @@ function InputUpdateForm(props) {
             <option value="2021">2021</option>
             <option value="2022">2022</option>
             <option value="2023">2023</option>
+          </Input>
+        </FormGroup>
+
+        {/* Seating capacity */}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Số chỗ ngồi</b>
+          </Label>
+          <Input
+            id="seatingCapacity"
+            name="seatingCapacity"
+            placeholder="Nhập số ghế ngồi"
+            type="select"
+            value={seatingCapacity}
+            onChange={(event) => {
+              setSeatingCapacity(event.target.value);
+            }}
+          >
+            <option value="2">2</option>
+            <option value="2">4</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </Input>
+        </FormGroup>
+
+        {/* car fuel*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Loại nhiên liệu</b>
+          </Label>
+          <Input
+            id="carFuel"
+            name="carFuel"
+            placeholder="Chọn loại nhiên liệu"
+            type="select"
+            value={carFuel}
+            onChange={(event) => {
+              setCarFuel(event.target.value);
+            }}
+          >
+            <option value="Xăng">Xăng</option>
+            <option value="Dầu">Dầu</option>
+            <option value="Điện">Điện</option>
+            <option value="Hybrid">Hybrid</option>
+          </Input>
+        </FormGroup>
+
+        {/* Country*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Xuất xứ</b>
+          </Label>
+          <Input
+            id="country"
+            name="country"
+            type="select"
+            value={country}
+            onChange={(event) => {
+              setCountry(event.target.value);
+            }}
+          >
+            <option value="Đức">Đức</option>
+            <option value="Hàn Quốc">Hàn Quốc</option>
+            <option value="Nhật">Nhật</option>
+            <option value="Trung Quốc">Trung Quốc</option>
+            <option value="Mỹ">Mỹ</option>
+            <option value="Việt Nam">Việt Nam</option>
+          </Input>
+        </FormGroup>
+
+        {/* Transmission*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Loại hộp số</b>
+          </Label>
+          <Input
+            id="transmission"
+            name="transmission"
+            type="select"
+            value={transmission}
+            onChange={(event) => {
+              setTransmission(event.target.value);
+            }}
+          >
+            <option value="Số tự động">Số tự động</option>
+            <option value="Số sàn">Số sàn</option>
+          </Input>
+        </FormGroup>
+
+        {/* status*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Trạng thái</b>
+          </Label>
+          <Input
+            id="status"
+            name="status"
+            type="select"
+            value={status}
+            onChange={(event) => {
+              setStatus(event.target.value);
+            }}
+          >
+            <option value="Còn hàng">Còn hàng</option>
+            <option value="Hết hàng">Hết hàng</option>
           </Input>
         </FormGroup>
 

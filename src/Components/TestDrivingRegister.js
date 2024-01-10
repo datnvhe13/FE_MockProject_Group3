@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm } from "../Redux/Reducer/formSlice";
 import { actionAddCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
+import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
 
 function TestDrivingRegister(props) {
   // declare State
@@ -40,7 +41,12 @@ function TestDrivingRegister(props) {
 
   // load data from api and display on selector
   let listCar = useSelector((state) => state.carReducer.listCar);
-  //let listCar = selectListCar(stateRedux);
+
+  //const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actionFetchListCarsAPI_MDW());
+  }, []);
 
   console.log("listCar register modal : ", listCar);
   let item = "";

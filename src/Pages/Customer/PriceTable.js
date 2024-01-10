@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import ReactPaginate from "react-paginate";
 import { getListCarAPI } from "../../API/CarAPI";
 import { useSelector, useDispatch } from "react-redux";
 import { actionFetchListCarsAPI_MDW } from "../../Redux/Reducer/CarSliceReducer";
@@ -9,22 +9,25 @@ function PriceTable() {
   // let stateRedux = useSelector((state) => state);
   // let listCar = selectListCar(stateRedux);
 
-  let listCar = useSelector((state) => state.carReducer.listCar);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(9);
+
+  let { listCar, totalPages } = useSelector((state) => state.carReducer);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actionFetchListCarsAPI_MDW());
-  }, []);
+    dispatch(actionFetchListCarsAPI_MDW({ page, size }));
+  }, [page, size]);
 
   let items = "";
   items = listCar.map((car, index) => {
     return (
       <tr>
-        <th scope="row">{index}</th>
+        <th scope="row">{car.id}</th>
         <td>{car.name}</td>
         <td>{car.price} VNĐ</td>
-        <td>{car.yearOfManu}</td>
+        <td>{car.yearOfManufacturer}</td>
       </tr>
     );
   });
@@ -58,6 +61,32 @@ function PriceTable() {
               <tbody>{items}</tbody>
             </table>
           </div>
+        </div>
+        {/* paging */}
+        <div style={{ marginLeft: "750px", width: "900px" }}>
+          <ReactPaginate
+            nextLabel="next >"
+            onPageChange={(selectedItem) => {
+              setPage(selectedItem.selected);
+            }}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={totalPages} // totalPages
+            forcePage={page}
+            previousLabel="< previous"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+            renderOnZeroPageCount={null}
+          />
         </div>
       </div>
 

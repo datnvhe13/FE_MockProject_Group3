@@ -9,26 +9,32 @@ import { Input } from "reactstrap";
 function ProductDetail() {
   // Get the userId param from the URL.
   let { ID } = useParams();
-  // ...
-  console.log("ID : ", ID);
-  // declare state
   const [carDetail, setCarDetail] = useState({});
+
+  console.log("ID ", ID);
 
   // call API to get list cars
   let fetchListCar = () => {
     // call getListAPI function
     getListCarAPI().then((response) => {
-      const detail = response.find((car) => car.id === ID);
+      // console.log("response", response);
+      let carArray = response.content;
+      console.log("carArray", carArray);
+
+      let detail = carArray.find((car) => car.id == ID);
+      console.log("carDetail : ", detail);
+
       setCarDetail(detail);
     });
   };
+
+  console.log("carDetail : ", carDetail);
 
   let imagePathState = `../../Asset/${carDetail.image}`;
 
   // hook
   useEffect(() => {
     fetchListCar();
-    console.log(carDetail);
   }, []);
   //
 
@@ -64,38 +70,38 @@ function ProductDetail() {
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <p>
               <i class="bx bx-calendar" style={{ paddingRight: "8px" }}></i>Năm
-              SX: <b>{carDetail.yearOfManu}</b>
+              SX: <b>{carDetail.yearOfManufacturer}</b>
             </p>
             <p>
               <i class="bx bx-gas-pump" style={{ paddingRight: "8px" }}></i>
-              Nhiên liệu: <b>Xăng</b>
+              Nhiên liệu: <b>{carDetail.carFuel}</b>
             </p>
             <p>
               <i class="bx bx-chair" style={{ paddingRight: "8px" }}></i>Số chỗ
-              ngồi: <b>07</b>
+              ngồi: <b>{carDetail.seatingCapacity}</b>
             </p>
             <p>
               <i class="bx bx-info-circle" style={{ paddingRight: "8px" }}></i>
-              Xuất xứ: <b>Nhập khẩu nguyên chiếc tại Đức</b>
+              Xuất xứ: <b>{carDetail.placeOfManufacture}</b>
             </p>
           </div>
 
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <p>
               <i class="bx bx-info-circle" style={{ paddingRight: "8px" }}></i>
-              Kiểu dáng: <b>{carDetail.category}</b>
+              Kiểu dáng: <b>{carDetail.carCategoryName}</b>
             </p>
             <p>
               <i class="bx bx-info-circle" style={{ paddingRight: "8px" }}></i>
-              Hộp số: <b>Tự động</b>
+              Hộp số: <b>{carDetail.transmission}</b>
             </p>
             <p>
               <i class="bx bx-info-circle" style={{ paddingRight: "8px" }}></i>
-              Trạng thái: <b>Mới 100%</b>
+              Trạng thái: <b>{carDetail.status}</b>
             </p>
             <p>
               <i class="bx bx-calendar" style={{ paddingRight: "8px" }}></i>Đăng
-              ngày: <b>06.04.2023</b>
+              ngày: <b>{carDetail.createAt}</b>
             </p>
           </div>
         </div>
@@ -169,15 +175,11 @@ function ProductDetail() {
             <h1 class="w3-center">{carDetail.name}</h1>
             <br />
             <h5 class="w3-center">
-              {carDetail.name} THE NEW {carDetail.yearOfManu}
+              {carDetail.name} THE NEW {carDetail.yearOfManufacturer}
             </h5>
             <p class="w3-large">{carDetail.information}</p>
             <p class="w3-large w3-text-grey w3-hide-medium">
-              Ở phiên bản mới, BMW tham vọng biến {carDetail.name} thành “ông
-              vua” trong nhóm SUV hạng sang, khi kết hợp giữa sự sang trọng và
-              công nghệ. Hãng xe Đức cũng tuyên bố hùng hồn rằng những thứ có
-              trên X7 sẽ không thể tìm thấy trên một chiếc Mercedes-Benz hay
-              Audi.
+              {carDetail.detailInformation}
             </p>
           </div>
         </div>
@@ -233,7 +235,8 @@ function ProductDetail() {
 
           <div class="w3-col l6 w3-padding-large">
             <img
-              src="../../Asset/Brighter and more powerful than the street lamps….jfif"
+              //src="../../Asset/Brighter and more powerful than the street lamps….jfif"
+              src={imagePathState}
               class="w3-round w3-image w3-opacity-min"
               alt="Menu"
               // style="width:100%"

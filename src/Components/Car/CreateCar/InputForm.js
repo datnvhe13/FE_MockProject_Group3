@@ -26,6 +26,13 @@ function InputForm() {
   let [desDetail, setDesDetail] = useState("");
   let [imagePath, setImagePath] = useState("");
   let [year, setYear] = useState("2018");
+
+  let [seatingCapacity, setSeatingCapacity] = useState("2");
+  let [carFuel, setCarFuel] = useState("Xăng");
+  let [country, setCountry] = useState("Đức");
+  let [transmission, setTransmission] = useState("Tự động");
+  let [status, setStatus] = useState("Còn hàng");
+
   let [carType, setCarType] = useState("SUV");
 
   // function to get image link
@@ -36,20 +43,35 @@ function InputForm() {
     var imageName = itemArray[itemArray.length - 1];
     return imageName;
   }
+  const date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let _year = date.getFullYear();
+
+  // This arrangement can be altered based on how we want the date's format to appear.
+  let currentDate = `${day}-${month}-${_year}`;
 
   // add new function
   let handleCreateButton = () => {
     let car_new = {
       name: carName,
-      price: price,
-      info: description,
-      detail: desDetail,
       image: getImageName(imagePath),
-      year: year,
-      category: carType,
+      price: price,
+      information: description,
+      detailInformation: desDetail,
+      yearOfManufacturer: year,
+
+      seatingCapacity: seatingCapacity,
+      carFuel: carFuel,
+      placeOfManufacture: country,
+      transmission: transmission,
+      status: status,
+      createAt: currentDate,
+
+      carCategoryName: carType,
     };
     dispatch(actionAddCarAPI(car_new));
-    // console.log("car_new : ", car_new);
     alert("Add successfully !");
     dispatch(closeCreateForm());
   };
@@ -162,6 +184,112 @@ function InputForm() {
             <option value="2021">2021</option>
             <option value="2022">2022</option>
             <option value="2023">2023</option>
+          </Input>
+        </FormGroup>
+
+        {/* Seating capacity */}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Số chỗ ngồi</b>
+          </Label>
+          <Input
+            id="seatingCapacity"
+            name="seatingCapacity"
+            placeholder="Nhập số ghế ngồi"
+            type="select"
+            value={seatingCapacity}
+            onChange={(event) => {
+              setSeatingCapacity(event.target.value);
+            }}
+          >
+            <option value="2">2</option>
+            <option value="2">4</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </Input>
+        </FormGroup>
+
+        {/* car fuel*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Loại nhiên liệu</b>
+          </Label>
+          <Input
+            id="carFuel"
+            name="carFuel"
+            placeholder="Chọn loại nhiên liệu"
+            type="select"
+            value={carFuel}
+            onChange={(event) => {
+              setCarFuel(event.target.value);
+            }}
+          >
+            <option value="Xăng">Xăng</option>
+            <option value="Dầu">Dầu</option>
+            <option value="Điện">Điện</option>
+            <option value="Hybrid">Hybrid</option>
+          </Input>
+        </FormGroup>
+
+        {/* Country*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Xuất xứ</b>
+          </Label>
+          <Input
+            id="country"
+            name="country"
+            type="select"
+            value={country}
+            onChange={(event) => {
+              setCountry(event.target.value);
+            }}
+          >
+            <option value="Đức">Đức</option>
+            <option value="Hàn Quốc">Hàn Quốc</option>
+            <option value="Nhật">Nhật</option>
+            <option value="Trung Quốc">Trung Quốc</option>
+            <option value="Mỹ">Mỹ</option>
+            <option value="Việt Nam">Việt Nam</option>
+          </Input>
+        </FormGroup>
+
+        {/* Transmission*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Loại hộp số</b>
+          </Label>
+          <Input
+            id="transmission"
+            name="transmission"
+            type="select"
+            value={transmission}
+            onChange={(event) => {
+              setTransmission(event.target.value);
+            }}
+          >
+            <option value="Số tự động">Số tự động</option>
+            <option value="Số sàn">Số sàn</option>
+          </Input>
+        </FormGroup>
+
+        {/* status*/}
+        <FormGroup>
+          <Label for="exampleYear">
+            <b>Trạng thái</b>
+          </Label>
+          <Input
+            id="status"
+            name="status"
+            type="select"
+            value={status}
+            onChange={(event) => {
+              setStatus(event.target.value);
+            }}
+          >
+            <option value="Còn hàng">Còn hàng</option>
+            <option value="Hết hàng">Hết hàng</option>
           </Input>
         </FormGroup>
 
