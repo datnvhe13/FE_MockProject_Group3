@@ -17,7 +17,9 @@ function ModalUpdateNews() {
   const showUpdateForm = useSelector(
     (state) => state.CreateUpdateNewsFormReducer.value
   );
-  // const car_Update = useSelector((state) => state.formUpdateSlice.car);
+  const news_Update = useSelector(
+    (state) => state.CreateUpdateNewsFormReducer.newsUpdate
+  );
 
   return (
     <Container>
@@ -28,9 +30,7 @@ function ModalUpdateNews() {
         </ModalHeader>
         <ModalBody>
           {/* Input Form */}
-          <InputUpdateForm
-          //  car_Update={car_Update}
-          />
+          <InputUpdateForm news_Update={news_Update} />
         </ModalBody>
 
         <ModalFooter>

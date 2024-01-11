@@ -1,103 +1,99 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import {
-//   ADD_NEW_CUSTOMER_REGISTER_TEST_DRIVING,
-//   DELETE_CUSTOMER_REGISTER_TEST_DRIVING,
-//   FETCH_CUSTOMER_REGISTER_TEST_DRIVING,
-//   UPDATE_CUSTOMER_REGISTER_TEST_DRIVING,
-// } from "../../ActionType/actionType";
-// import {
-//   addNewCustomerTestDrivingAPI,
-//   deleteCustomerTestDrivingAPI,
-//   getListCustomerTestDrivingAPI,
-//   updateCustomerTestDrivingAPI,
-// } from "../../../API/CustomerRegisterTestDriving/CustomerAPI";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  ADD_NEW_NEWS,
+  DELETE_NEWS,
+  FETCH_NEWS_LIST,
+  UPDATE_NEWS,
+} from "../../ActionType/actionType";
+import {
+  addNewsAPI,
+  deleteNewsAPI,
+  getListNewsAPI,
+  updateNewsAPI,
+} from "./../../../API/News/NewsAPI";
 
-// const initialState = {
-//   listCustomer: [],
-// };
+const initialState = {
+  listNews: [],
+  totalPages: 0,
+};
 
-// // action : get all customer from api
-// export let actionGetListCustomerTestDrivingAPI = createAsyncThunk(
-//   FETCH_CUSTOMER_REGISTER_TEST_DRIVING,
-//   async () => {
-//     let listCustomerAPI = await getListCustomerTestDrivingAPI(); //action api
-//     return listCustomerAPI;
-//   }
-// );
+// action
+export let actionFetchListNewsAPI_MDW = createAsyncThunk(
+  FETCH_NEWS_LIST,
+  async (params) => {
+    let listNewsAPI = await getListNewsAPI(params);
+    return listNewsAPI;
+  }
+);
 
-// // action : add new customer api
-// export let actionAddCustomerTestDrivingAPI = createAsyncThunk(
-//   ADD_NEW_CUSTOMER_REGISTER_TEST_DRIVING,
-//   async (customerNew) => {
-//     let customerNew_API = await addNewCustomerTestDrivingAPI(customerNew); //action api
-//     return customerNew_API; //payload
-//   }
-// );
+// action : add new news api
+export let actionAddNewsAPI = createAsyncThunk(
+  ADD_NEW_NEWS,
+  async (news_New) => {
+    let newsNew_API = await addNewsAPI(news_New); //action api
+    return newsNew_API; //payload
+  }
+);
+// action : delete a news api
+export let actionDeleteNewsAPI = createAsyncThunk(
+  DELETE_NEWS,
+  async (id_delete) => {
+    let news_deleted = await deleteNewsAPI(id_delete); //action api
+    alert("Deleted successfully !");
+    return news_deleted; //payload
+  }
+);
+// action : update news
+export let actionUpdateNewsAPI = createAsyncThunk(
+  UPDATE_NEWS,
+  async (newsUpdate, { getState }) => {
+    // get state
+    const state = getState();
+    const listNews = state.NewsSliceReducer.listNews;
+    // console.log("listCar : ", listCar);
+    // console.log("carUpdate : ", carUpdate);
+    // update car API
+    let newsUpdate_API = await updateNewsAPI(newsUpdate); //action api
 
-// // action : delete a car api
-// export let actionDeleteCustomerTestDrivingAPI = createAsyncThunk(
-//   DELETE_CUSTOMER_REGISTER_TEST_DRIVING,
-//   async (id_delete) => {
-//     let customer_deleted = await deleteCustomerTestDrivingAPI(id_delete); //action api
-//     return customer_deleted; //payload
-//   }
-// );
+    const _lst = listNews.map((news) => {
+      if (news.id == newsUpdate_API.id) {
+        return newsUpdate_API;
+      }
+      return news;
+    });
 
-// // action : update Customer
-// export let actionUpdateCustomerAPI = createAsyncThunk(
-//   UPDATE_CUSTOMER_REGISTER_TEST_DRIVING,
-//   async (customerUpdate, { getState }) => {
-//     const state = getState();
-//     const listCustomer = state.customerTestDriving.listCustomer;
-//     let customerUpdate_API = await updateCustomerTestDrivingAPI(customerUpdate); //action api
-//     const _listCustomer = listCustomer.map((customer) => {
-//       if (customer.id === customerUpdate_API.id) {
-//         customer = customerUpdate_API;
-//       }
-//       return customer;
-//     });
+    alert("Chỉnh sửa successfully !");
 
-//     return _listCustomer; //payload
-//   }
-// );
+    return _lst; //payload
+  }
+);
 
-// export const customerTestDrivingSlice = createSlice({
-//   name: "customerReceiveAlertPrice",
-//   initialState,
-//   reducers: {
-//     // handle reducers not relate to middleware
-//   },
-//   extraReducers: (builder) => {
-//     // handle reducers  relate to middleware
-//     // handle when call API succesfully
-//     builder.addCase(
-//       actionGetListCustomerTestDrivingAPI.fulfilled,
-//       (state, action) => {
-//         state.listCustomer = action.payload;
-//       }
-//     );
-//     builder.addCase(
-//       actionAddCustomerTestDrivingAPI.fulfilled,
-//       (state, action) => {
-//         state.listCustomer.push(action.payload);
-//       }
-//     );
-//     builder.addCase(
-//       actionDeleteCustomerTestDrivingAPI.fulfilled,
-//       (state, action) => {
-//         state.listCustomer.splice(
-//           state.listCustomer.findIndex(
-//             (customer) => customer.id === action.payload.id
-//           ),
-//           1
-//         );
-//       }
-//     );
-//     builder.addCase(actionUpdateCustomerAPI.fulfilled, (state, action) => {
-//       state.listCustomer = action.payload;
-//     });
-//   },
-// });
+export const NewsSliceReducer = createSlice({
+  name: "NewsSliceReducer",
+  initialState,
+  reducers: {
+    // handle reducers not relate to middleware
+  },
+  //,
+  extraReducers: (builder) => {
+    builder.addCase(actionFetchListNewsAPI_MDW.fulfilled, (state, action) => {
+      state.listNews = action.payload.content;
+      state.totalPages = action.payload.totalPages;
+    });
+    builder.addCase(actionUpdateNewsAPI.fulfilled, (state, action) => {
+      state.listNews = action.payload;
+      //   console.log("action.payload update :", action.payload);
+    });
+    builder.addCase(actionAddNewsAPI.fulfilled, (state, action) => {
+      state.listNews.push(action.payload);
+    });
+    builder.addCase(actionDeleteNewsAPI.fulfilled, (state, action) => {
+      state.listNews.splice(
+        state.listNews.findIndex((news) => news.id == action.payload.id),
+        1
+      );
+    });
+  },
+});
 
-// export let { actions } = customerTestDrivingSlice;
-// export default customerTestDrivingSlice.reducer;
+export default NewsSliceReducer.reducer;

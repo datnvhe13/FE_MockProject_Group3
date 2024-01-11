@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateNewsForm } from "../../../Redux/Reducer/News/CreateNewNewsFormReducer";
+import { actionAddNewsAPI } from "../../../Redux/Reducer/News/NewsSliceReducer";
 //import { actionAddCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
 //import { closeCreateForm } from "../../../Redux/Reducer/CreateNewFormReducer";
 // import { closeCreateForm } from "../../../Redux/Reducer/CreateNewFormReducer";
 // import { actionAddCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
+import { actionFetchListNewsAPI_MDW } from "./../../../Redux/Reducer/News/NewsSliceReducer";
 
 function InputForm() {
   //
@@ -19,15 +21,6 @@ function InputForm() {
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [imagePath, setImagePath] = useState("");
-  // let [date, setDate] = useState(Date.now());
-  const date = new Date();
-
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-
-  // This arrangement can be altered based on how we want the date's format to appear.
-  let currentDate = `${day}-${month}-${year}`;
 
   // function to get image link
   function getImageName(imageLink) {
@@ -43,12 +36,12 @@ function InputForm() {
     let News_new = {
       title: title,
       description: description,
-      imagePath: getImageName(imagePath),
-      date: currentDate,
+      image: getImageName(imagePath),
     };
-    //dispatch(actionAddCarAPI(car_new));
+    dispatch(actionAddNewsAPI(News_new));
     console.log("News_new : ", News_new);
     alert("Add successfully !");
+    // dispatch(actionFetchListNewsAPI_MDW());
     dispatch(closeCreateNewsForm());
   };
 
@@ -60,11 +53,11 @@ function InputForm() {
           <Label for="exampleName">
             <b>Tiêu đề</b>
           </Label>
-          <Input
+          <textarea
+            style={{ width: "100%", height: "80px" }}
             id="Title"
             name="Title"
-            placeholder="Nhập tiêu đề tin"
-            type="text"
+            type="textArea"
             value={title}
             onChange={(event) => {
               setTitle(event.target.value);
@@ -106,22 +99,6 @@ function InputForm() {
             }}
           ></Input>
         </FormGroup>
-
-        {/* Date */}
-        {/* <FormGroup>
-          <Label for="examplePrice">
-            <b>Ngày lái thử</b>
-          </Label>
-          <Input
-            id="date"
-            name="date"
-            type="date"
-            value={date}
-            onChange={(event) => {
-              setDate(event.target.value);
-            }}
-          />
-        </FormGroup> */}
 
         {/* Button */}
         <Button

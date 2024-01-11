@@ -16,6 +16,8 @@ function ProductAdminPage() {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(9);
 
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     dispathRedux(actionFetchListCarsAPI_MDW({ page, size }));
   }, [page, size]);
@@ -27,6 +29,10 @@ function ProductAdminPage() {
     alert("Delete successfully !");
     // dispathRedux(closeForm())
     console.log("Id_Delete: ", id_Delete);
+  };
+
+  let handleSearch = () => {
+    dispathRedux(actionFetchListCarsAPI_MDW({ page, size, search }));
   };
 
   //
@@ -106,7 +112,8 @@ function ProductAdminPage() {
                   type="text"
                   id="inputSearch"
                   class="form-control"
-                  value=""
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
                 />
               </div>
               {/* <!-- search button --> */}
@@ -114,9 +121,9 @@ function ProductAdminPage() {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onclick="handleToSearch()"
+                  onClick={() => handleSearch()}
                 >
-                  Search
+                  Tìm kiếm
                 </button>
               </div>
             </div>
