@@ -6,6 +6,9 @@ import { actionAddCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDr
 import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
 
 function TestDrivingRegister(props) {
+  const showForm = useSelector((state) => state.formReducer.value);
+  const dispatch = useDispatch();
+
   // declare State
   let [fullName, setFullName] = useState("");
   let [carType, setCarType] = useState("");
@@ -25,11 +28,12 @@ function TestDrivingRegister(props) {
   let onHandleClick = () => {
     //
     let customer_New = {
-      FullName: fullName,
-      CarType: carType,
-      Date: date,
-      PhoneNumber: phoneNumber,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      dateTestDriving: date,
+      carName: carType,
     };
+
     dispatch(actionAddCustomerTestDrivingAPI(customer_New));
     // alert success
     alert("Đăng ký thành công !");
@@ -58,11 +62,8 @@ function TestDrivingRegister(props) {
   // let stateRedux = useSelector((state)=> state)
   // let showForm = stateRedux.formRedux.showForm
 
-  const showFormRTK = useSelector((state) => state.formReducer.value);
-  const dispatch = useDispatch();
-
   return (
-    <Modal isOpen={showFormRTK}>
+    <Modal isOpen={showForm}>
       <ModalHeader>ĐĂNG KÝ LÁI THỬ XE</ModalHeader>
       <ModalBody>
         <p>

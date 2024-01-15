@@ -27,6 +27,7 @@ import { Provider } from "react-redux";
 import { store } from "./Redux/Store/store";
 import ProductDetail from "./Pages/Customer/ProductDetail";
 import Accounts from "./Pages/Admin/Accounts";
+import MyAccount from "./Pages/Admin/MyAccount";
 
 const router = createBrowserRouter([
   // {
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         Accounts,
+      },
+      {
+        path: "MyAccounts",
+        element: <MyAccount />,
       },
       {
         path: "accounts",

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: false,
-  newsUpdate: {},
+  accountUpdate: {},
 };
 
 export const CreateUpdateAccountFormReducer = createSlice({
@@ -15,7 +15,7 @@ export const CreateUpdateAccountFormReducer = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.value = true;
-      state.newsUpdate = action.payload;
+      state.accountUpdate = action.payload;
     },
     closeUpdateAccountForm: (state) => {
       state.value = false;

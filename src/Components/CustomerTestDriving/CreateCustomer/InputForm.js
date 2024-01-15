@@ -3,17 +3,10 @@ import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateCustomerTestForm } from "../../../Redux/Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer";
 import { actionAddCustomerTestDrivingAPI } from "../../../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
+import { actionFetchListCarsAPI_MDW } from "./../../../Redux/Reducer/CarSliceReducer";
 
 function InputForm() {
   let dispatch = useDispatch();
-  // const listCarCategory = useSelector(
-  //   (state) => state.carCategorySlice.listCarCategory
-  // );
-
-  // let items = "";
-  // items = listCarCategory.map((carCategory, index) => {
-  //   return <option value={carCategory.name}>{carCategory.name}</option>;
-  // });
 
   // declare States to save data in Input TextField
   let [fullName, setFullName] = useState("");
@@ -21,14 +14,30 @@ function InputForm() {
   let [date, setDate] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
 
+  useEffect(() => {
+    dispatch(actionFetchListCarsAPI_MDW({}));
+  }, []);
+
+  let listCar = useSelector((state) => state.carReducer.listCar);
+
+  let items = "";
+  items = listCar.map((car, index) => {
+    return (
+      <>
+        <option value={car.name}>{car.name}</option>
+      </>
+    );
+  });
+
   let handleCreateButton = () => {
     let customer = {
-      FullName: fullName,
-      CarType: carType,
-      Date: date,
-      PhoneNumber: phoneNumber,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      dateTestDriving: date,
+      carName: carType,
     };
     dispatch(actionAddCustomerTestDrivingAPI(customer));
+    console.log("customer : ", customer);
     alert("Thêm mới thành công !");
     dispatch(closeCreateCustomerTestForm());
   };
@@ -67,15 +76,7 @@ function InputForm() {
               setCarType(event.target.value);
             }}
           >
-            <option value="BMW X3">BMW X3</option>
-            <option value="BMW X4">BMW X4</option>
-            <option value="BMW X5">BMW X5</option>
-            <option value="BMW 730li">BMW 730li</option>
-            <option value="BMW Z4 All New">BMW Z4 All New</option>
-            <option value="BMW 430i Convertible">BMW 430i Convertible</option>
-            <option value="BMW 5-Series">BMW 5-Series</option>
-            <option value="BMW 520i Msport 2022">BMW 520i Msport 2022</option>
-            <option value="BMW 530i Sport-line">BMW 530i Sport-line</option>
+            {items}
           </Input>
         </FormGroup>
         {/* Date */}

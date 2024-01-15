@@ -16,6 +16,7 @@ import CreateUpdateNewsFormReducer from "../Reducer/News/CreateUpdateNewsFormRed
 import CreateNewAccountFormReducer from "../Reducer/Account/CreateNewAccountFormReducer";
 import CreateUpdateAccountFormReducer from "../Reducer/Account/CreateUpdateAccountFormReducer";
 import NewsSliceReducer from "../Reducer/News/NewsSliceReducer";
+import accountSliceReducer from "../Reducer/Account/accountSliceReducer";
 
 export const store = configureStore({
   reducer: {
@@ -37,5 +38,6 @@ export const store = configureStore({
     CreateNewAccountFormReducer: CreateNewAccountFormReducer,
     CreateUpdateAccountFormReducer: CreateUpdateAccountFormReducer,
     NewsSliceReducer: NewsSliceReducer,
+    accountSliceReducer: accountSliceReducer,
   },
 });

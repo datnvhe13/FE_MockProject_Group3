@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { actionAddCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
-import { closeCreateForm } from "../../../Redux/Reducer/CreateNewFormReducer";
+import {
+  actionAddAccountAPI,
+  actionGetListAccountsAPI,
+} from "../../../Redux/Reducer/Account/accountSliceReducer";
+import { closeCreateAccountForm } from "../../../Redux/Reducer/Account/CreateNewAccountFormReducer";
+import { getListAccountsAPI } from "../../../API/Account/AccountsAPI";
 
 function InputForm() {
   let dispatch = useDispatch();
@@ -11,34 +15,32 @@ function InputForm() {
   let [userName, setUserName] = useState("");
   let [passWord, setPassWord] = useState("");
   let [confirmPassWord, setConfirmPassWord] = useState("");
-  let [email, setEmail] = useState("");
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
-  let [role, setRole] = useState("Admin");
-
-  const date = new Date();
-
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-
-  // This arrangement can be altered based on how we want the date's format to appear.
-  let currentDate = `${day}-${month}-${year}`;
+  let [role, setRole] = useState("ADMIN");
 
   // add new function
   let handleCreateButton = () => {
-    let account_new = {
-      userName: userName,
-      fullName: firstName + " " + lastName,
-      passWord: passWord,
-      confirmPassWord: confirmPassWord,
-      role: role,
-      currentDate: currentDate,
-    };
-    // dispatch(actionAddCarAPI(car_new));
-    alert("Add successfully !");
-    // dispatch(closeCreateForm());
+    if (passWord === confirmPassWord) {
+      let account_new = {
+        username: userName,
+        password: passWord,
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
+      };
+      dispatch(actionAddAccountAPI(account_new));
+      alert("Add successfully !");
+      dispatch(closeCreateAccountForm());
+    } else {
+      alert("Password and confirm password must be the same, please retry !");
+      dispatch(closeCreateAccountForm());
+    }
   };
+
+  // useEffect(() => {
+  //   dispatch(actionGetListAccountsAPI({}));
+  // }, []);
 
   return (
     <>
@@ -142,8 +144,8 @@ function InputForm() {
               setRole(event.target.value);
             }}
           >
-            <option value="Admin">Admin</option>
-            <option value="User">Customer</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="USER">USER</option>
           </Input>
         </FormGroup>
 

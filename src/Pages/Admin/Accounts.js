@@ -1,15 +1,69 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import ModalCreateNewNews from "../../Components/News/AddNews/ModalCreateNewNews";
-import ModalUpdateNews from "../../Components/News/UpdateNews/ModalUpdateNews";
-import { showUpdateNewsForm } from "../../Redux/Reducer/News/CreateUpdateNewsFormReducer";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ModalCreateNewAccount from "../../Components/Account/CreateAccount/ModalCreateNewAccount";
 import { showCreateAccountForm } from "../../Redux/Reducer/Account/CreateNewAccountFormReducer";
 import ModalUpdateAccount from "./../../Components/Account/UpdateAccount/ModalUpdateAccount";
 import { showUpdateAccountForm } from "../../Redux/Reducer/Account/CreateUpdateAccountFormReducer";
+import {
+  actionDeleteAccountAPI,
+  actionGetListAccountsAPI,
+} from "../../Redux/Reducer/Account/accountSliceReducer";
+import ReactPaginate from "react-paginate";
+import { deleteAccountsAPI } from "../../API/Account/AccountsAPI";
 
 function Accounts() {
   let dispatch = useDispatch();
+
+  let { listAccounts, totalPages } = useSelector(
+    (state) => state.accountSliceReducer
+  );
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(6);
+
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    dispatch(actionGetListAccountsAPI({ page, size }));
+  }, [page, size]);
+
+  let handleSearch = () => {
+    dispatch(actionGetListAccountsAPI({ page, size, search }));
+  };
+
+  let items = "";
+  items = listAccounts.map((account, index) => {
+    return (
+      <>
+        <tr>
+          <td>{index}</td>
+          <td>{account.username}</td>
+          <td>
+            {account.firstName} {account.lastName}
+          </td>
+          <td>{account.role}</td>
+          <td>{account.createAt}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onClick={() => dispatch(showUpdateAccountForm(account))}
+            >
+              Sửa
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onClick={() => dispatch(actionDeleteAccountAPI(account.id))}
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </>
+    );
+  });
 
   return (
     <>
@@ -35,7 +89,8 @@ function Accounts() {
                     type="text"
                     id="inputSearch"
                     class="form-control"
-                    value=""
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
                   />
                 </div>
                 {/* <!-- search button --> */}
@@ -43,7 +98,7 @@ function Accounts() {
                   <button
                     type="button"
                     class="btn btn-primary"
-                    onclick="handleToSearch()"
+                    onClick={() => handleSearch()}
                   >
                     Tìm kiếm
                   </button>
@@ -90,107 +145,34 @@ function Accounts() {
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody id="tbProductTable">
-                    <tr>
-                      <td>1</td>
-                      <td>datnvhe130026</td>
-                      <td>Nguyen Van Dat</td>
-                      <td>Admin</td>
-                      <td>12/02/2023</td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          onClick={() => dispatch(showUpdateAccountForm())}
-                        >
-                          Sửa
-                        </button>
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-danger">
-                          Xóa
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Luunvhe130026</td>
-                      <td>Nguyen Van Luu</td>
-                      <td>User</td>
-                      <td>12/02/2023</td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          //onClick={() => dispatch(showUpdateNewsForm())}
-                        >
-                          Sửa
-                        </button>
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-danger">
-                          Xóa
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Luunvhe130026</td>
-                      <td>Nguyen Van Luu</td>
-                      <td>User</td>
-                      <td>12/02/2023</td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          //onClick={() => dispatch(showUpdateNewsForm())}
-                        >
-                          Sửa
-                        </button>
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-danger">
-                          Xóa
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="tbProductTable">{items}</tbody>
                 </table>
                 {/* paging */}
-                <nav
-                  style={{ float: "right" }}
-                  aria-label="Page navigation example"
-                >
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div style={{ marginLeft: "520px", width: "900px" }}>
+                  <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={(selectedItem) => {
+                      setPage(selectedItem.selected);
+                    }}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={totalPages} // totalPages
+                    forcePage={page}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
               </div>
             </div>
           </div>

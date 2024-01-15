@@ -71,6 +71,7 @@ export const carSliceReducer = createSlice({
     builder.addCase(actionFetchListCarsAPI_MDW.fulfilled, (state, action) => {
       state.listCar = action.payload.content;
       state.totalPages = action.payload.totalPages;
+      console.log("action.payload ", action.payload);
     });
     builder.addCase(actionUpdateCarAPI.fulfilled, (state, action) => {
       state.listCar = action.payload;

@@ -17,7 +17,9 @@ function ModalUpdateAccount() {
   const showUpdateForm = useSelector(
     (state) => state.CreateUpdateAccountFormReducer.value
   );
-  // const car_Update = useSelector((state) => state.formUpdateSlice.car);
+  const account_Update = useSelector(
+    (state) => state.CreateUpdateAccountFormReducer.accountUpdate
+  );
 
   return (
     <Container>
@@ -28,9 +30,7 @@ function ModalUpdateAccount() {
         </ModalHeader>
         <ModalBody>
           {/* Input Form */}
-          <InputUpdateForm
-          // car_Update={car_Update}
-          />
+          <InputUpdateForm account_Update={account_Update} />
         </ModalBody>
 
         <ModalFooter>

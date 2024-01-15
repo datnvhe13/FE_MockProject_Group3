@@ -1,19 +1,9 @@
 import { api } from "./api";
 
-// get list car API
-// export let getListCarAPI = () => {
-//     return api("GET", "BmwCars", null);
-// }
-
 export let getListCarAPI = (params) => {
   //return api("GET", "BmwCars", null);
   return api("GET", "cars", null, params);
 };
-
-// get list car API
-// export let getListCarCategoryAPI = () => {
-//   return api("GET", "BmwCarcategory", null);
-// };
 
 // delete
 export const deleteCarAPI = (Id_delete) => {

@@ -14,13 +14,14 @@ import {
 
 const initialState = {
   listCustomer: [],
+  totalPages: 0,
 };
 
 // action : get all customer from api
 export let actionGetListCustomerTestDrivingAPI = createAsyncThunk(
   FETCH_CUSTOMER_REGISTER_TEST_DRIVING,
-  async () => {
-    let listCustomerAPI = await getListCustomerTestDrivingAPI(); //action api
+  async (params) => {
+    let listCustomerAPI = await getListCustomerTestDrivingAPI(params); //action api
     return listCustomerAPI;
   }
 );
@@ -51,7 +52,7 @@ export let actionUpdateCustomerAPI = createAsyncThunk(
     const listCustomer = state.customerTestDriving.listCustomer;
     let customerUpdate_API = await updateCustomerTestDrivingAPI(customerUpdate); //action api
     const _listCustomer = listCustomer.map((customer) => {
-      if (customer.id === customerUpdate_API.id) {
+      if (customer.id == customerUpdate_API.id) {
         customer = customerUpdate_API;
       }
       return customer;
@@ -73,7 +74,8 @@ export const customerTestDrivingSlice = createSlice({
     builder.addCase(
       actionGetListCustomerTestDrivingAPI.fulfilled,
       (state, action) => {
-        state.listCustomer = action.payload;
+        state.listCustomer = action.payload.content;
+        state.totalPages = action.payload.totalPages;
       }
     );
     builder.addCase(

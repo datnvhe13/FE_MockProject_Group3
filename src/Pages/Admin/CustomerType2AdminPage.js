@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { showCreateCustomerForm } from "../Redux/Reducer/CustomerReceiveAlertPrice/CreateNewCustomerFormReducer";
-// import ModalUpdateCustomer from "./CustomerReceiveAlertPrice/UpdateCustomer/ModalUpdateCustomer";
-// import ModalCreateNewCustomer from "./CustomerReceiveAlertPrice/CreateCustomer/ModalCreateNewCustomer";
-//import { showUpdateCustomerForm } from "../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
-//import {
 import {
   actionDeleteCustomerAPI,
   actionGetListCustomerAPI,
@@ -13,36 +8,42 @@ import { showCreateCustomerForm } from "../../Redux/Reducer/CustomerReceiveAlert
 import ModalCreateNewCustomer from "./../../Components/CustomerReceiveAlertPrice/CreateCustomer/ModalCreateNewCustomer";
 import ModalUpdateCustomer from "./../../Components/CustomerReceiveAlertPrice/UpdateCustomer/ModalUpdateCustomer";
 import { showUpdateCustomerForm } from "../../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
-//actionDeleteCustomerAPI,
-//actionGetListCustomerAPI,
-//} from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
+import ReactPaginate from "react-paginate";
 
 function CustomerType2AdminPage() {
-  // let [listCustomer, setListCustomer] = useState([]);
-
   let dispatch = useDispatch();
 
+  let { listCustomer, totalPages } = useSelector(
+    (state) => state.customerReceiveAlertPrice
+  );
+
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(7);
+
+  const [name, setSearch] = useState("");
+
   useEffect(() => {
-    dispatch(actionGetListCustomerAPI());
-  }, []);
+    dispatch(actionGetListCustomerAPI({ page, size }));
+  }, [page, size]);
 
   let onHandleDelete = (index_delete) => {
     dispatch(actionDeleteCustomerAPI(index_delete));
     alert("Delete successfully !");
   };
 
-  let listCustomer = useSelector(
-    (state) => state.customerReceiveAlertPrice.listCustomer
-  );
+  let handleSearch = () => {
+    dispatch(actionGetListCustomerAPI({ page, size, name }));
+  };
+
   let items = "";
   items = listCustomer.map((customer, index) => {
     return (
       <tr>
         <td>{index}</td>
-        <td>{customer.FullName}</td>
-        <td>{customer.PhoneNumber}</td>
-        <td>{customer.CarType}</td>
-        <td>{customer.PaymentMethod}</td>
+        <td>{customer.fullName}</td>
+        <td>{customer.phoneNumber}</td>
+        <td>{customer.carName}</td>
+        <td>{customer.paymentMethod}</td>
         <td>
           <button
             onClick={() => dispatch(showUpdateCustomerForm(customer))}
@@ -89,7 +90,8 @@ function CustomerType2AdminPage() {
                     type="text"
                     id="inputSearch"
                     class="form-control"
-                    value=""
+                    value={name}
+                    onChange={(event) => setSearch(event.target.value)}
                   />
                 </div>
                 {/* <!-- search button --> */}
@@ -97,7 +99,7 @@ function CustomerType2AdminPage() {
                   <button
                     type="button"
                     class="btn btn-primary"
-                    onclick="handleToSearch()"
+                    onClick={() => handleSearch()}
                   >
                     Tìm kiếm
                   </button>
@@ -149,40 +151,31 @@ function CustomerType2AdminPage() {
                   <tbody id="tbProductTable">{items}</tbody>
                 </table>
                 {/* paging */}
-                <nav
-                  style={{ float: "right" }}
-                  aria-label="Page navigation example"
-                >
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div style={{ marginLeft: "520px", width: "900px" }}>
+                  <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={(selectedItem) => {
+                      setPage(selectedItem.selected);
+                    }}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={totalPages} // totalPages
+                    forcePage={page}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -1,19 +1,18 @@
-import axios from 'axios'
-
+import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: "https://64b9f4a979b7c9def6c1703d.mockapi.io/api/",
-    headers: {
-        "content-type": "application/json",
-    }
+  baseURL: "http://localhost:8080/api/v1/",
+  headers: {
+    "content-type": "application/json",
+  },
 });
 
-export const api = (method, endpoint, payload) => {
-    return axiosClient(endpoint, {method : method, data: payload}).then((response)=>{
-        return response.data;
+export const api = (method, endpoint, data, params) => {
+  return axiosClient(endpoint, { method, data, params })
+    .then((response) => {
+      return response.data;
     })
-    .catch((error)=>{
-        console.log(error);
-    })
-}
-
+    .catch((error) => {
+      console.log(error);
+    });
+};

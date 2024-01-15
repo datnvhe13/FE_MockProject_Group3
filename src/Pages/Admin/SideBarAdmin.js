@@ -36,11 +36,21 @@ function SideBarAdmin() {
               {/* end li */}
               {/* li */}
               <li className="list">
+                <Link to="MyAccounts" className="nav-link">
+                  {/* home icon */}
+                  <i class="bx bx-male-female icon"></i>
+                  {/*  */}
+                  <span class="link">Tài khoản của bạn</span>
+                </Link>
+              </li>
+              {/* end li */}
+              {/* li */}
+              <li className="list">
                 <Link to="accounts" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-male-female icon"></i>
                   {/*  */}
-                  <span class="link">Tài khoản</span>
+                  <span class="link">Quản lý tài khoản</span>
                 </Link>
               </li>
               {/* end li */}

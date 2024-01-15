@@ -1,30 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { closeUpdateAccountForm } from "../../../Redux/Reducer/Account/CreateUpdateAccountFormReducer";
+import {
+  actionGetListAccountsAPI,
+  actionUpdateAccountAPI,
+} from "../../../Redux/Reducer/Account/accountSliceReducer";
 // import { actionUpdateCarAPI } from '../../../Redux/Reducer/CarSliceReducer';
-import { closeUpdateForm } from "../../../Redux/Reducer/CreateUpdateFormReducer";
-import { actionUpdateCarAPI } from "../../../Redux/Reducer/CarSliceReducer";
 
 function InputUpdateForm(props) {
-  let { car_Update } = props;
-  console.log("car_Update props : ", car_Update);
+  let { account_Update } = props;
 
-  const date = new Date();
-
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let _year = date.getFullYear();
-
-  // This arrangement can be altered based on how we want the date's format to appear.
-  let currentDate = `${day}-${month}-${_year}`;
+  // declare States to save data in Input TextField
+  let [userName, setUserName] = useState(account_Update.username);
+  let [passWord, setPassWord] = useState(account_Update.password);
+  let [firstName, setFirstName] = useState(account_Update.firstName);
+  let [lastName, setLastName] = useState(account_Update.lastName);
+  let [role, setRole] = useState(account_Update.role);
 
   let dispatch = useDispatch();
 
   let handleUpdateButton = () => {
-    let carUpdate = {};
-    // dispatch(actionUpdateCarAPI(carUpdate));
-    // dispatch(closeUpdateForm());
+    let accountUpdate = {
+      id: account_Update.id,
+      username: userName,
+      password: passWord,
+      firstName: firstName,
+      lastName: lastName,
+      role: role,
+    };
+    dispatch(actionUpdateAccountAPI(accountUpdate));
+    alert("Update successfully !");
+    dispatch(closeUpdateAccountForm());
   };
+
+  // useEffect(() => {
+  //   dispatch(actionGetListAccountsAPI({}));
+  // }, []);
 
   return (
     <>
@@ -40,10 +52,10 @@ function InputUpdateForm(props) {
             placeholder="Nhập tên đăng nhập"
             type="text"
             readOnly
-            // value={userName}
-            // onChange={(event) => {
-            //   setUserName(event.target.value);
-            // }}
+            value={userName}
+            onChange={(event) => {
+              setUserName(event.target.value);
+            }}
           />
         </FormGroup>
 
@@ -58,29 +70,12 @@ function InputUpdateForm(props) {
             placeholder="Nhập mật khẩu"
             type="password"
             readOnly
-            // value={passWord}
-            // onChange={(event) => {
-            //   setPassWord(event.target.value);
-            // }}
+            value={passWord}
+            onChange={(event) => {
+              setPassWord(event.target.value);
+            }}
           />
         </FormGroup>
-
-        {/* Confirm Password */}
-        {/* <FormGroup>
-          <Label for="exampleName">
-            <b>Xác nhận mật khẩu</b>
-          </Label>
-          <Input
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Nhập lại mật khẩu"
-            type="password"
-            // value={confirmPassWord}
-            // onChange={(event) => {
-            //   setConfirmPassWord(event.target.value);
-            // }}
-          />
-        </FormGroup> */}
 
         {/*First name */}
         <FormGroup>
@@ -92,10 +87,10 @@ function InputUpdateForm(props) {
             name="firstName"
             placeholder="Nhập tên họ"
             type="text"
-            // value={firstName}
-            // onChange={(event) => {
-            //   setFirstName(event.target.value);
-            // }}
+            value={firstName}
+            onChange={(event) => {
+              setFirstName(event.target.value);
+            }}
           />
         </FormGroup>
 
@@ -109,10 +104,10 @@ function InputUpdateForm(props) {
             name="lastName"
             placeholder="Nhập tên "
             type="text"
-            // value={lastName}
-            // onChange={(event) => {
-            //   setLastName(event.target.value);
-            // }}
+            value={lastName}
+            onChange={(event) => {
+              setLastName(event.target.value);
+            }}
           />
         </FormGroup>
 
@@ -125,13 +120,13 @@ function InputUpdateForm(props) {
             id="role"
             name="role"
             type="select"
-            // value={role}
-            // onChange={(event) => {
-            //   setRole(event.target.value);
-            // }}
+            value={role}
+            onChange={(event) => {
+              setRole(event.target.value);
+            }}
           >
-            <option value="Admin">Admin</option>
-            <option value="User">Customer</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="USER">USER</option>
           </Input>
         </FormGroup>
 

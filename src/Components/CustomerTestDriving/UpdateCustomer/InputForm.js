@@ -11,17 +11,17 @@ function InputForm(props) {
   console.log("customer_Update props : ", customer_Update);
 
   // declare States to save data in Input TextField
-  let [fullName, setFullName] = useState(customer_Update.FullName);
+  let [fullName, setFullName] = useState(customer_Update.fullName);
   let [carType, setCarType] = useState("BMW X3");
-  let [date, setDate] = useState(customer_Update.Date);
-  let [phoneNumber, setPhoneNumber] = useState(customer_Update.PhoneNumber);
+  let [date, setDate] = useState(customer_Update.dateTestDriving);
+  let [phoneNumber, setPhoneNumber] = useState(customer_Update.phoneNumber);
 
   let handleEditButton = () => {
     let customer_TestDriving_Update = {
-      FullName: fullName,
-      CarType: carType,
-      Date: date,
-      PhoneNumber: phoneNumber,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      dateTestDriving: date,
+      carName: carType,
       id: customer_Update.id,
     };
     //console.log("customer_TestDriving_Update : ", customer_TestDriving_Update);

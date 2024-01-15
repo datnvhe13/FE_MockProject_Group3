@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { closeForm2 } from "../Redux/Reducer/formSlice2";
 import { actionAddCustomerAPI } from "../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
+import { actionFetchListCarsAPI_MDW } from "../Redux/Reducer/CarSliceReducer";
 
 function RegisterModal(props) {
   // declare State
   let [fullName, setFullName] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
-  let [carType, setCarType] = useState("BMW X3");
+  let [carType, setCarType] = useState(1);
   let [payments, setPayments] = useState("1");
+
+  const showFormRTK = useSelector((state) => state.formSlice2.value);
+  const dispatch = useDispatch();
 
   //let [listCustomer, setListCustomer] = useState([]);
 
@@ -26,6 +30,19 @@ function RegisterModal(props) {
     //console.log(payments);
   };
 
+  // useEffect(() => {
+  //   dispatch(actionFetchListCarsAPI_MDW({}));
+  // }, []);
+
+  let listCar = useSelector((state) => state.carReducer.listCar);
+  //let listCar = selectListCar(stateRedux);
+
+  //console.log("listCar register modal : ", listCar);
+  let items = "";
+  items = listCar.map((car) => {
+    return <option value={car.id}>{car.name}</option>;
+  });
+
   // function handle register
   let onHandleRegister = () => {
     let paymentMethod = "";
@@ -34,20 +51,15 @@ function RegisterModal(props) {
     } else {
       paymentMethod = "Trả góp";
     }
-    //  declare new customer
-    // let customer = {
-    //   fullName: fullName,
-    //   phoneNumber: phoneNumber,
-    //   carType: carType,
-    //   paymentMethod: paymentMethod,
-    // };
+
     let customer = {
-      FullName: fullName,
-      PhoneNumber: phoneNumber,
-      CarType: carType,
-      PaymentMethod: paymentMethod,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      carId: carType,
+      paymentMethod: paymentMethod,
     };
 
+    // console.log("customer : ", customer);
     dispatch(actionAddCustomerAPI(customer));
     // alert success
     alert("Đăng ký thành công !");
@@ -56,18 +68,6 @@ function RegisterModal(props) {
     // reset textfield in modal
     resetModal();
   };
-
-  let listCar = useSelector((state) => state.carReducer.listCar);
-  //let listCar = selectListCar(stateRedux);
-
-  //console.log("listCar register modal : ", listCar);
-  let items = "";
-  items = listCar.map((car) => {
-    return <option value={car.name}>{car.name}</option>;
-  });
-
-  const showFormRTK = useSelector((state) => state.formSlice2.value);
-  const dispatch = useDispatch();
 
   return (
     <Modal isOpen={showFormRTK}>

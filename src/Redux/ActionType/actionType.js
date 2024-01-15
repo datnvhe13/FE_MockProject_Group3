@@ -27,3 +27,8 @@ export const FETCH_NEWS_LIST = "FETCH_NEWS_LIST";
 export const DELETE_NEWS = "DELETE_NEWS";
 export const ADD_NEW_NEWS = "ADD_NEW_NEWS";
 export const UPDATE_NEWS = "UPDATE_NEWS";
+
+export const FETCH_ACCOUNTS_LIST = "FETCH_ACCOUNTS_LIST";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
+export const ADD_NEW_ACCOUNT = "ADD_NEW_ACCOUNT";
+export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";

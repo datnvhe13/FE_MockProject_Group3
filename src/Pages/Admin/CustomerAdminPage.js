@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import ModalCreateCustomerTestDriving from "./CustomerTestDriving/CreateCustomer/ModalCreateCustomerTestDriving";
 import { useDispatch, useSelector } from "react-redux";
-// import { showCreateCustomerTestForm } from "../Redux/Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer";
-// import ModalUpdateCustomerTestDriving from "./CustomerTestDriving/UpdateCustomer/ModalUpdateCustomerTestDriving";
-// import { actionDeleteCustomerTestDrivingAPI, actionGetListCustomerTestDrivingAPI } from "../Redux/Reducer/CustomerTestDriving/CustomerTestDrivingSliceReducer";
-// import { showUpdateCustomerTestDrivingForm } from "../Redux/Reducer/CustomerTestDriving/CreateUpdateCustomerFormReducer";
 import {
   actionDeleteCustomerTestDrivingAPI,
   actionGetListCustomerTestDrivingAPI,
@@ -13,32 +8,43 @@ import { showCreateCustomerTestForm } from "../../Redux/Reducer/CustomerTestDriv
 import ModalCreateCustomerTestDriving from "./../../Components/CustomerTestDriving/CreateCustomer/ModalCreateCustomerTestDriving";
 import ModalUpdateCustomerTestDriving from "./../../Components/CustomerTestDriving/UpdateCustomer/ModalUpdateCustomerTestDriving";
 import { showUpdateCustomerTestDrivingForm } from "../../Redux/Reducer/CustomerTestDriving/CreateUpdateCustomerFormReducer";
+import ReactPaginate from "react-paginate";
 
 function CustomerAdminPage() {
   let dispatch = useDispatch();
 
+  let { listCustomer, totalPages } = useSelector(
+    (state) => state.customerTestDriving
+  );
+
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(9);
+
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    dispatch(actionGetListCustomerTestDrivingAPI());
-  }, []);
+    dispatch(actionGetListCustomerTestDrivingAPI({ page, size }));
+  }, [page, size]);
 
   let onHandleDelete = (id_delete) => {
     dispatch(actionDeleteCustomerTestDrivingAPI(id_delete));
     alert("Delete successfully !");
-    dispatch(actionGetListCustomerTestDrivingAPI());
+    //dispatch(actionGetListCustomerTestDrivingAPI());
   };
 
-  let listCustomer = useSelector(
-    (state) => state.customerTestDriving.listCustomer
-  );
+  let handleSearch = () => {
+    dispatch(actionGetListCustomerTestDrivingAPI({ page, size, search }));
+  };
+
   let items = "";
   items = listCustomer.map((customer, index) => {
     return (
       <tr>
         <td>{index}</td>
-        <td>{customer.FullName}</td>
-        <td>{customer.CarType}</td>
-        <td>{customer.Date}</td>
-        <td>{customer.PhoneNumber}</td>
+        <td>{customer.fullName}</td>
+        <td>{customer.carName}</td>
+        <td>{customer.dateTestDriving}</td>
+        <td>{customer.phoneNumber}</td>
         <td>
           <button
             onClick={() =>
@@ -87,7 +93,8 @@ function CustomerAdminPage() {
                     type="text"
                     id="inputSearch"
                     class="form-control"
-                    value=""
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
                   />
                 </div>
                 {/* <!-- search button --> */}
@@ -95,7 +102,7 @@ function CustomerAdminPage() {
                   <button
                     type="button"
                     class="btn btn-primary"
-                    onclick="handleToSearch()"
+                    onClick={() => handleSearch()}
                   >
                     Tìm kiếm
                   </button>
@@ -147,40 +154,31 @@ function CustomerAdminPage() {
                   <tbody id="tbProductTable">{items}</tbody>
                 </table>
                 {/* paging */}
-                <nav
-                  style={{ float: "right" }}
-                  aria-label="Page navigation example"
-                >
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div style={{ marginLeft: "520px", width: "900px" }}>
+                  <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={(selectedItem) => {
+                      setPage(selectedItem.selected);
+                    }}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={totalPages} // totalPages
+                    forcePage={page}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
               </div>
             </div>
           </div>

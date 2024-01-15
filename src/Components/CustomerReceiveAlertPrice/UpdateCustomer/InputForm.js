@@ -1,40 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { closeUpdateCustomerForm } from "../../../Redux/Reducer/CustomerReceiveAlertPrice/CreateUpdateCustomerFormReducer";
 import { actionUpdateCustomerAPI } from "../../../Redux/Reducer/CustomerReceiveAlertPrice/CustomerSliceReducer";
+import { actionFetchListCarsAPI_MDW } from "../../../Redux/Reducer/CarSliceReducer";
 
 function InputForm(props) {
   let { customerUpdate } = props;
   let dispatch = useDispatch();
 
-  // const listCarCategory = useSelector(
-  //   (state) => state.carCategorySlice.listCarCategory
-  // );
+  useEffect(() => {
+    dispatch(actionFetchListCarsAPI_MDW({}));
+  }, []);
 
-  // let items = "";
-  // items = listCarCategory.map((carCategory, index) => {
-  //   return <option value={carCategory.name}>{carCategory.name}</option>;
-  // });
+  let listCar = useSelector((state) => state.carReducer.listCar);
+
+  let items = "";
+  items = listCar.map((car, index) => {
+    return (
+      <>
+        <option value={car.id}>{car.name}</option>
+      </>
+    );
+  });
+
+  //let _car = listCar.find((car) => car.name == customerUpdate.carName);
 
   // declare States to save data in Input TextField
-  let [fullName, setFullName] = useState(customerUpdate.FullName);
-  let [phoneNumber, setPhoneNumber] = useState(customerUpdate.PhoneNumber);
-  let [carType, setCarType] = useState("BMW X3");
+  let [fullName, setFullName] = useState(customerUpdate.fullName);
+  let [phoneNumber, setPhoneNumber] = useState(customerUpdate.phoneNumber);
+  let [carType, setCarType] = useState(1);
   let [paymentMethod, setPaymentMethod] = useState(
-    customerUpdate.PaymentMethod
+    customerUpdate.paymentMethod
   );
   //
   let handleCreateButton = () => {
     let customer_Update = {
-      FullName: fullName,
-      PhoneNumber: phoneNumber,
-      CarType: carType,
-      PaymentMethod: paymentMethod,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      carId: carType,
+      paymentMethod: paymentMethod,
       id: customerUpdate.id,
     };
 
-    console.log("customer_Update : ", customer_Update);
     dispatch(actionUpdateCustomerAPI(customer_Update));
     alert("Chỉnh sửa thành công !");
     dispatch(closeUpdateCustomerForm());
@@ -89,15 +97,7 @@ function InputForm(props) {
               setCarType(event.target.value);
             }}
           >
-            <option value="BMW X3">BMW X3</option>
-            <option value="BMW X4">BMW X4</option>
-            <option value="BMW X5">BMW X5</option>
-            <option value="BMW 730li">BMW 730li</option>
-            <option value="BMW Z4 All New">BMW Z4 All New</option>
-            <option value="BMW 430i Convertible">BMW 430i Convertible</option>
-            <option value="BMW 5-Series">BMW 5-Series</option>
-            <option value="BMW 520i Msport 2022">BMW 520i Msport 2022</option>
-            <option value="BMW 530i Sport-line">BMW 530i Sport-line</option>
+            {items}
           </Input>
         </FormGroup>
         {/* Date */}

@@ -20,6 +20,8 @@ function ModalUpdateCustomer() {
     (state) => state.CreateUpdateCustomerFormReducer.customer
   );
 
+  console.log("customerUpdate : ", customerUpdate);
+
   const dispatch = useDispatch();
 
   return (
