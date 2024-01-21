@@ -28,7 +28,6 @@ function ProductAdminPage() {
     // alert
     alert("Delete successfully !");
     // dispathRedux(closeForm())
-    console.log("Id_Delete: ", id_Delete);
   };
 
   let handleSearch = () => {

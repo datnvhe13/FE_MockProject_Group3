@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -12,18 +12,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { closeLoginForm } from "../../Redux/Reducer/loginModalSlice";
 // import { closeCreateCustomerTestForm } from '../../Redux/Reducer/CustomerTestDriving/CreateNewCustomerTestFormReducer';
+import { useNavigate } from "react-router-dom";
+import { actionGetListAccountsAPI } from "../../Redux/Reducer/Account/accountSliceReducer";
 
 function LoginForm() {
   const formState = useSelector((state) => state.loginModalSlice.value);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  let [email, setEmail] = useState("");
+  let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
 
+  let listAccounts = useSelector(
+    (state) => state.accountSliceReducer.listAccounts
+  );
+
+  let account = listAccounts.find((acc) => acc.username == username);
+
   let handleLogin = () => {
-    console.log("email : ", email);
-    console.log("password : ", password);
+    if (account.role == "USER" && account.password == password) {
+      navigate("/homePage2");
+      dispatch(closeLoginForm());
+      alert("Login successfully !");
+    } else if (account.role == "ADMIN" && account.password == password) {
+      navigate("/adminPage");
+    } else {
+      alert("Account not existed ! Register please");
+    }
   };
+
+  useEffect(() => {
+    dispatch(actionGetListAccountsAPI({}));
+  }, []);
 
   return (
     <Container>
@@ -51,10 +71,10 @@ function LoginForm() {
                 type="email"
                 id="form2Example17"
                 class="form-control form-control-lg"
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => setUsername(event.target.value)}
               />
               <label class="form-label" for="form2Example17">
-                Email address
+                Username
               </label>
             </div>
 

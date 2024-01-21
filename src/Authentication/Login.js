@@ -37,12 +37,12 @@ function Login() {
 
                         <div class="form-outline mb-4">
                           <input
-                            type="email"
+                            type="text"
                             id="form2Example17"
                             class="form-control form-control-lg"
                           />
                           <label class="form-label" for="form2Example17">
-                            Email address
+                            Username
                           </label>
                         </div>
 

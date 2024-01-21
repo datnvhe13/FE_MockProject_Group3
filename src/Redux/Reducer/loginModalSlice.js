@@ -18,5 +18,4 @@ export const loginModalSlice = createSlice({
 });
 
 export const { showLoginForm, closeLoginForm } = loginModalSlice.actions;
-
 export default loginModalSlice.reducer;

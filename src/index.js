@@ -4,7 +4,6 @@ import "./index.css";
 // import App from './App';
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import HomePage from "./Pages/Customer/HomePage";
 import Contact from "./Pages/Customer/Contact";
@@ -28,12 +27,14 @@ import { store } from "./Redux/Store/store";
 import ProductDetail from "./Pages/Customer/ProductDetail";
 import Accounts from "./Pages/Admin/Accounts";
 import MyAccount from "./Pages/Admin/MyAccount";
+import LoginForm from "./Components/LoginModal/LoginForm";
+import HomePage2 from "./Pages/Customer/HomePage2";
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <Login />,
-  // },
+  {
+    path: "/login",
+    element: <LoginForm />,
+  },
   {
     path: "register",
     element: <Register />,
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "homePage",
+    path: "/homePage",
     element: <HomePage />,
     children: [
       {
@@ -110,8 +111,43 @@ const router = createBrowserRouter([
       },
     ],
   },
+  ,
   {
-    path: "adminPage",
+    path: "/homePage2",
+    element: <HomePage2 />,
+    children: [
+      {
+        index: true,
+        element: <MainBody />,
+      },
+      {
+        path: "introduce",
+        element: <Introduce />,
+      },
+      {
+        path: "priceTable",
+        element: <PriceTable />,
+      },
+      {
+        path: "buyCar",
+        element: <BuyingOnInstallment />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "new",
+        element: <News />,
+      },
+      {
+        path: "carDetail/:ID",
+        element: <ProductDetail />,
+      },
+    ],
+  },
+  {
+    path: "/adminPage",
     element: <AdminPage />,
     children: [
       {

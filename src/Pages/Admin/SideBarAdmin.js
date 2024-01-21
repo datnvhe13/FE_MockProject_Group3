@@ -34,17 +34,7 @@ function SideBarAdmin() {
                 </Link>
               </li>
               {/* end li */}
-              {/* li */}
-              <li className="list">
-                <Link to="MyAccounts" className="nav-link">
-                  {/* home icon */}
-                  <i class="bx bx-male-female icon"></i>
-                  {/*  */}
-                  <span class="link">Tài khoản của bạn</span>
-                </Link>
-              </li>
-              {/* end li */}
-              {/* li */}
+
               <li className="list">
                 <Link to="accounts" className="nav-link">
                   {/* home icon */}
@@ -107,14 +97,12 @@ function SideBarAdmin() {
               {/* end li */}
 
               {/* li */}
-              <li className="list">
+              {/* <li className="list">
                 <Link to="message" className="nav-link">
-                  {/* home icon */}
                   <i class="bx bx-chat icon"></i>
-                  {/*  */}
                   <span class="link">Phản hồi</span>
                 </Link>
-              </li>
+              </li> */}
               {/* end li */}
               {/* li */}
               <li className="list">
@@ -129,7 +117,7 @@ function SideBarAdmin() {
 
               {/* li */}
               <li className="list">
-                <Link to="#" className="nav-link">
+                <Link to="/homePage" className="nav-link">
                   {/* home icon */}
                   <i class="bx bx-log-out icon"></i>
                   {/*  */}

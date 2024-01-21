@@ -1,23 +1,35 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { actionAddAccountAPI } from "../Redux/Reducer/Account/accountSliceReducer";
 
 function Register() {
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
-  let [email, setEmail] = useState("");
+  let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [confirmPassword, setConfirmPassword] = useState("");
 
+  let dispatch = useDispatch();
+  const navigate = useNavigate();
+
   let newAcccount = {
+    username: username,
+    password: password,
     firstName: firstName,
     lastName: lastName,
-    email: email,
-    password: password,
-    confirmPassword: confirmPassword,
+    //confirmPassword: confirmPassword,
   };
 
   let handleRegister = () => {
-    console.log("newAcccount : ", newAcccount);
+    if (password !== confirmPassword) {
+      alert("Password and confirm password must be the same ! Please re-input");
+    } else {
+      dispatch(actionAddAccountAPI(newAcccount));
+      alert("Add successfully !");
+      navigate("/login");
+    }
   };
 
   return (
@@ -68,16 +80,16 @@ function Register() {
                     </div>
                   </div>
 
-                  {/* <!-- Email input --> */}
+                  {/* <!-- Username input --> */}
                   <div className="form-outline mb-4">
                     <input
-                      type="email"
+                      type="text"
                       id="form3Example3"
                       className="form-control"
-                      onChange={(event) => setEmail(event.target.value)}
+                      onChange={(event) => setUsername(event.target.value)}
                     />
                     <label className="form-label" for="form3Example3">
-                      Email address
+                      Username
                     </label>
                   </div>
 
